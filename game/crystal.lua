@@ -36,11 +36,19 @@ function Crystal:draw()
   love.graphics.circle("fill", self.x, self.y, 15, 4)
 
   if self.label ~= nil then
-      love.graphics.setColor(255-self.r, 255-self.g, 255-self.b)
-      love.graphics.print(tostring(self.label), self.x - 4, self.y - 7)
+    love.graphics.setColor(255-self.r, 255-self.g, 255-self.b)
+    love.graphics.print(tostring(self.label), self.x - 4, self.y - 7)
   end
 
   love.graphics.setColor(unpack(old))
+end
+
+function Crystal:func(x)
+  return x
+end
+
+function Crystal:drawlinks()
+
 end
 
 function Crystal:collision_check(x,y,w,h)
