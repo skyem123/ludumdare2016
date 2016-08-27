@@ -1,4 +1,4 @@
-require 'crystal'
+local Crystal = require 'crystal'
 
 screen_displayed = nil
 game_paused = false

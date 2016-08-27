@@ -1,4 +1,4 @@
-Crystal = {
+local Crystal = {
     ['x'] = 0,
     ['y'] = 0,
     ['r'] = 0,
@@ -8,6 +8,8 @@ Crystal = {
     ['label'] = "",
     ['size'] = 40
 }
+
+do
 
 function Crystal:new(o, coords, colour, label, links)
   o = self:internalnew(o)
@@ -54,3 +56,7 @@ end
 function Crystal:collision_check(x,y,w,h)
  -- TODO
 end
+
+end
+
+return Crystal
