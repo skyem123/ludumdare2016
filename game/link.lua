@@ -2,7 +2,7 @@ local helpers = require 'helpers'
 local Crystal = require 'crystal'
 
 local Link = {
-  ['c1'] = Crystal:new({}, {100, 100}),
+  ['c1'] = Crystal:new(),
   ['c2'] = Crystal:new(),
   ['colour'] = {0, 0, 0}
 }
