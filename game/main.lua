@@ -1,4 +1,5 @@
 screen_displayed = nil
+game_paused = false
 
 function display_welcome()
     love.graphics.print(
@@ -18,11 +19,12 @@ y_test = 0;
 
 function love.draw()
     if screen_displayed ~= nil then
+        game_paused = true
         screen_displayed()
         return
     end
     -- the game should be rendered here.
-    if test then love.graphics.circle("fill", x_test, y_test, 10, 10) end
+    if test then love.graphics.circle("fill", x_test, y_test, 10, 4) end
 end
 
 function love.load()
@@ -30,14 +32,21 @@ function love.load()
 end
 
 function love.keypressed(key)
-    if screen_displayed ~= nil then
+    if game_paused then
         if key == 'return' then
-            screen_displayed = nil;
+            screen_displayed = nil
+            game_paused = false
         end
+
+        return
+    end
+    if key == 'w' then
+        screen_displayed = display_welcome
     end
 end
 
 function love.mousepressed(x, y, button, istouch)
+    if game_paused then return end
     if button == 1 then
         test = true
         x_test = x
