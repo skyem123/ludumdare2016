@@ -6,12 +6,15 @@ local Crystal = {
     ['b'] = 0,
     ['links'] = {},
     ['label'] = "",
-    ['size'] = 40
+    ['size'] = 40,
+    ['ID'] = 0,
 }
 
 do
 
 local helpers = require 'helpers'
+
+local nextID = 1
 
 function Crystal:new(o, coords, colour, label, links)
   o = self:internalnew(o)
@@ -22,6 +25,8 @@ function Crystal:new(o, coords, colour, label, links)
   o.b = colour[3] or self.b
   o.links = links or self.links
   o.label = label or self.label
+  o.ID = nextID
+  nextID = nextID + 1
   return o
 end
 
@@ -52,7 +57,7 @@ function Crystal:func(x)
 end
 
 function Crystal:drawlinks()
-
+    --TODO
 end
 
 function Crystal:collision_check(x,y,w,h)

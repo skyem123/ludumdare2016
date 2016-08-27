@@ -55,6 +55,15 @@ save_crystal({231, 334}, {255,  255,   0}, "4", {})
 save_crystal({ 744, 444}, {  0,  255, 255}, "5", {})
 save_crystal({ 444, 223}, {255,    0, 255}, "6", {})
 
+crystals = {}
+
+save_crystal({432,  44}, {255,   0,    0}, "1", {})
+save_crystal({324,  67}, {  0, 255,    0}, "2", {})
+save_crystal({ 42, 563}, {  0,   0,  255}, "3", {})
+save_crystal({231, 334}, {255,  255,   0}, "4", {})
+save_crystal({ 744, 444}, {  0,  255, 255}, "5", {})
+save_crystal({ 444, 223}, {255,    0, 255}, "6", {})
+
 
 function render_crystals()
   for i,crystal in pairs(crystals) do
@@ -67,6 +76,14 @@ link_list = {
     -- {r, g, b, x1, y1, x2, y2}
 }
 
+function find_crystal_from_ID(crystal_list, ID)
+    for _,crystal in pairs(crystal_list) do
+        if crystal.ID == ID then
+            return crystal
+        end
+    end
+end
+
 function update_link_list()
   link_list = {}
   local i = 0
@@ -76,7 +93,7 @@ function update_link_list()
       link_list[i] = {
           crystal.r, crystal.g, crystal.b,
           crystal.x, crystal.y,
-          crystals[link_dest].x, crystals[link_dest].y
+          find_crystal_from_ID(crystals, link_dest).x, find_crystal_from_ID(crystals, link_dest).y
       }
     end
   end
@@ -115,7 +132,7 @@ end
 function collision_check_all_crystals(x,y,w,h)
   for i,crystal in pairs(crystals) do
     if crystal:collision_check(x,y,w,h) then
-      return i, crystal
+      return crystal.ID, crystal
     end
   end
   return nil, nil
@@ -207,7 +224,7 @@ function love.mousepressed(x, y, button, istouch)
     if (link_id ~= nil) and (target_id ~= nil) then
       if target_id == link_id then do_not_add = true end
 
-      for i,link in pairs(crystals[link_id].links) do
+      for i,link in pairs(link_crystal.links) do
         if target_id == link then
           link_crystal.links[i] = nil
           do_not_add = true
@@ -215,7 +232,7 @@ function love.mousepressed(x, y, button, istouch)
         end
       end
 
-      for i,link in pairs(crystals[target_id].links) do
+      for i,link in pairs(target_crystal.links) do
         if link_id == link then
           target_crystal.links[i] = nil
           do_not_add = true
