@@ -29,16 +29,18 @@ function Link:draw()
 end
 
 function Link:collision_check(link)
-  local o1 = self.c1.orientation(self.c2, link.c1)
-  local o2 = self.c1.orientation(self.c2, link.c2)
-  local o3 = link.c1.orientation(link.c2, self.c1)
-  local o4 = link.c1.orientation(link.c2, self.c2)
+  local o1 = self.c1:orientation(self.c2, link.c1)
+  local o2 = self.c1:orientation(self.c2, link.c2)
+  local o3 = link.c1:orientation(link.c2, self.c1)
+  local o4 = link.c1:orientation(link.c2, self.c2)
 
   if (o1 ~= o2 and o3 ~= o4) then
     return true
   end
 
-  if (o1 == 0 and self.c1.onSeg(link.c1, self.c2)) then
+  if self.c1 == link.c1 or self.c2 == link.c2 then
+      return false
+  elseif (o1 == 0 and self.c1.onSeg(link.c1, self.c2)) then
     return true
   elseif (o2 == 0 and self.c1.onSeg(link.c2, self.c2)) then
     return true

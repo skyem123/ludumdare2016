@@ -99,7 +99,6 @@ function collision_check_all_crystals(x,y,w,h)
     return crystal
 end
 
-
 function love.draw()
   if screen_displayed ~= nil then
     game_paused = true
@@ -182,6 +181,8 @@ function love.mousepressed(x, y, button, istouch)
 
     local do_not_add = false
 
+
+
     if (link_crystal ~= nil) and (target_crystal ~= nil) then
       if target_crystal == link_crystal then do_not_add = true end
       for i,link in pairs(link_crystal.links) do
@@ -202,7 +203,17 @@ function love.mousepressed(x, y, button, istouch)
 
       if not do_not_add then
         print("wut")
-        table.insert(link_crystal.links, Link:new(link_crystal, target_crystal))
+        local collide = false
+        local the_link = Link:new(link_crystal, target_crystal)
+        for _,crystal in pairs(crystals) do
+            for _,link in pairs(crystal.links) do
+                if (the_link:collision_check(link)) then
+                    collide = true
+                end
+            end
+        end
+
+        if not collide then table.insert(link_crystal.links, Link:new(link_crystal, target_crystal)) end
       end
       --link_y, link_x, link_id, link_crystal, target_id, target_crystal = nil, nil, nil, nil, nil, nil
       update_render_lists()
