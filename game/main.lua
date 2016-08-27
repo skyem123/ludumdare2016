@@ -48,21 +48,15 @@ function save_crystal(coords, colour, label, links)
   return table.insert(crystals, Crystal:new({}, coords, colour, label, links))
 end
 
-save_crystal({432,  44}, {255,   0,    0}, "1", {})
-save_crystal({324,  67}, {  0, 255,    0}, "2", {})
-save_crystal({ 42, 563}, {  0,   0,  255}, "3", {})
-save_crystal({231, 334}, {255,  255,   0}, "4", {})
-save_crystal({ 744, 444}, {  0,  255, 255}, "5", {})
-save_crystal({ 444, 223}, {255,    0, 255}, "6", {})
-
-crystals = {}
-
-save_crystal({432,  44}, {255,   0,    0}, "1", {})
-save_crystal({324,  67}, {  0, 255,    0}, "2", {})
-save_crystal({ 42, 563}, {  0,   0,  255}, "3", {})
-save_crystal({231, 334}, {255,  255,   0}, "4", {})
-save_crystal({ 744, 444}, {  0,  255, 255}, "5", {})
-save_crystal({ 444, 223}, {255,    0, 255}, "6", {})
+function load_level(name)
+    level = require("levels/" .. name)
+    -- load the level
+    for _,item in pairs(level) do
+        if item[1] == "crystal" then
+            save_crystal(unpack(item, 2))
+        end
+    end
+end
 
 
 function render_crystals()
@@ -135,8 +129,9 @@ function love.draw()
 end
 
 function love.load()
-  screen_displayed = display_welcome
-  update_render_lists()
+    load_level("test")
+    screen_displayed = display_welcome
+    update_render_lists()
 end
 
 function love.keypressed(key)
@@ -210,7 +205,7 @@ function love.mousepressed(x, y, button, istouch)
         table.insert(link_crystal.links, target_crystal)
       end
       --link_y, link_x, link_id, link_crystal, target_id, target_crystal = nil, nil, nil, nil, nil, nil
-      update_link_list()
+      update_render_lists()
     end
   elseif button == 2 then -- stop linking
     linking = false
