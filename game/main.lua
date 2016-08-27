@@ -81,7 +81,7 @@ crystal_render_list = {
 }
 
 function update_crystal_render_list()
-    for i,crystal in ipairs(crystals) do
+    for i,crystal in pairs(crystals) do
         crystal_render_list[i] = {
             crystal.r,
             crystal.g,
@@ -108,7 +108,7 @@ function render_crystal(r, g, b, x, y, label)
 end
 
 function render_crystals()
-    for i,crystal in ipairs(crystal_render_list) do
+    for i,crystal in pairs(crystal_render_list) do
         render_crystal(unpack(crystal))
     end
 end
@@ -121,8 +121,8 @@ link_list = {
 function update_link_list()
     link_list = {}
     local i = 0
-    for _,crystal in ipairs(crystals) do
-        for _,link_dest in ipairs(crystal.links) do
+    for _,crystal in pairs(crystals) do
+        for _,link_dest in pairs(crystal.links) do
             i = i+1
             link_list[i] = {
                 crystal.r, crystal.g, crystal.b,
@@ -153,7 +153,7 @@ function old_render_link_crystal(r, g, b, l_1, l_2)
 end
 
 function render_links()
-    for i,link in ipairs(link_list) do
+    for i,link in pairs(link_list) do
         render_link_position(unpack(link))
     end
 end
@@ -180,7 +180,7 @@ function collision_check_crystal(crystal, x,y,w,h)
 end
 
 function collision_check_all_crystals(x,y,w,h)
-    for i,crystal in ipairs(crystals) do
+    for i,crystal in pairs(crystals) do
         if collision_check_crystal(crystal, x,y,w,h) then
             return i, crystal
         end
