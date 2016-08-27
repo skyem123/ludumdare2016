@@ -182,24 +182,32 @@ function love.mousepressed(x, y, button, istouch)
 
     local do_not_add = false
 
+    print(1)
     if (link_crystal ~= nil) and (target_crystal ~= nil) then
+      print(2)
       if target_crystal == link_crystal then do_not_add = true end
 
       for i,link in pairs(link_crystal.links) do
+        print(3)
         if target_crystal == link.c2 then
+          print(4)
           link_crystal.links[i] = nil
           do_not_add = true
           print("gah")
         end
       end
 
+      print(5)
       for i,link in pairs(target_crystal.links) do
+        print(6)
         if link_crystal == link.c1 then
+          print(7)
           target_crystal.links[i] = nil
           do_not_add = true
           print("guh")
         end
       end
+      print(8)
 
       if not do_not_add then
         print("wut")
