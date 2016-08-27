@@ -71,11 +71,6 @@ function render_crystals()
   end
 end
 
-
-link_list = {
-    -- {r, g, b, x1, y1, x2, y2}
-}
-
 function find_crystal_from_ID(crystal_list, ID)
     for _,crystal in pairs(crystal_list) do
         if crystal.ID == ID then
@@ -84,40 +79,15 @@ function find_crystal_from_ID(crystal_list, ID)
     end
 end
 
-function update_link_list()
-  link_list = {}
-  local i = 0
-  for _,crystal in pairs(crystals) do
-    for _,link_dest in pairs(crystal.links) do
-      i = i+1
-      link_list[i] = {
-          crystal.r, crystal.g, crystal.b,
-          crystal.x, crystal.y,
-          link_dest.x, link_dest.y
-      }
-    end
-  end
-end
-
-function render_link_position(r, g, b, x1, y1, x2, y2)
-  old = {love.graphics.getColor()}
-
-  love.graphics.setColor(r, g, b)
-
-  love.graphics.line(x1, y1, x2, y2)
-
-  love.graphics.setColor(unpack(old))
-end
-
 function render_links()
-  for i,link in pairs(link_list) do
-    render_link_position(unpack(link))
-  end
+    for _,crystal in pairs(crystals) do
+        crystal:drawlinks()
+    end
 end
 
 
 function update_render_lists()
-  update_link_list()
+    -- I'm keeping this here incanse there's something
 end
 
 function collision_check_all_crystals_ID(x,y,w,h)
@@ -148,7 +118,7 @@ function love.draw()
 
   -- render the links you are creating
   if linking then
-    render_link_position(255,255,255, link_x, link_y, love.mouse.getPosition())
+    helpers.render_link_position(255,255,255, link_x, link_y, love.mouse.getPosition())
   end
 
   love.graphics.print("Mouse at: " .. love.mouse.getX() .. ", " .. love.mouse.getY(), 0, 0)

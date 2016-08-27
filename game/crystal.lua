@@ -57,7 +57,9 @@ function Crystal:func(x)
 end
 
 function Crystal:drawlinks()
-    --TODO
+    for _,link in pairs(self.links) do
+        helpers.render_link_position(self.r, self.g, self.b, self.x, self.y, link.x, link.y )
+    end
 end
 
 function Crystal:collision_check(x,y,w,h)
