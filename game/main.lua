@@ -106,9 +106,8 @@ function render_crystals()
 end
 
 
--- TODO: Link from crystal objects?
 link_list = {
-    -- {r, g, b, linked_1, linked_2}
+    -- {r, g, b, x1, y1, x2, y2}
 }
 
 function update_link_list()
@@ -116,7 +115,8 @@ function update_link_list()
         for _,link_dest in ipairs(crystal.links) do
             link_list[i] = {
                 255, 255, 255,
-                i, link_dest
+                crystal.x, crystal.y,
+                crystals[link_dest].x, crystals[link_dest].y
             }
         end
     end
@@ -132,7 +132,7 @@ function render_link_position(r, g, b, x1, y1, x2, y2)
     love.graphics.setColor(unpack(old))
 end
 
-function render_link(r, g, b, l_1, l_2)
+function old_render_link_crystal(r, g, b, l_1, l_2)
     local x1 = crystal_render_list[l_1][4]
     local y1 = crystal_render_list[l_1][5]
     local x2 = crystal_render_list[l_2][4]
@@ -143,7 +143,7 @@ end
 
 function render_links()
     for i,link in ipairs(link_list) do
-        render_link(unpack(link))
+        render_link_position(unpack(link))
     end
 end
 
@@ -203,7 +203,9 @@ function love.keypressed(key)
             screen_displayed = render_pause_screen
         end
     end
-
+    if key == 'u' then
+        update_render_lists()
+    end
 end
 
 function love.mousepressed(x, y, button, istouch)
