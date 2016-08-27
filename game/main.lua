@@ -1,3 +1,5 @@
+require 'crystal'
+
 screen_displayed = nil
 game_paused = false
 screen_input = false
@@ -64,7 +66,7 @@ crystals = {
 }
 
 function save_crystal(coords, colour, links)
-    return table.insert(crystals, new_crystal(coords, colour, links))
+    return table.insert(crystals, Crystal:new(coords, colour, links))
 end
 
 --save_crystal({256, 256}, {255, 255, 0}, "c", {})
@@ -93,23 +95,9 @@ function update_crystal_render_list()
     end
 end
 
-function render_crystal(r, g, b, x, y, label)
-    old = {love.graphics.getColor()}
-
-    love.graphics.setColor(r, g, b)
-    love.graphics.circle("fill", x, y, 15, 4)
-
-    if label ~= nil then
-        love.graphics.setColor(255-r, 255-g, 255-b)
-        love.graphics.print(tostring(label), x - 4, y - 7)
-    end
-
-    love.graphics.setColor(unpack(old))
-end
-
 function render_crystals()
     for i,crystal in pairs(crystal_render_list) do
-        render_crystal(unpack(crystal))
+        crystal:draw()
     end
 end
 
@@ -176,7 +164,8 @@ end
 
 
 function collision_check_crystal(crystal, x,y,w,h)
-    return collision_check(crystal.x-20, crystal.y-20, 40,40,  x,y,w,h)
+  local s = crystal.size
+  return collision_check(crystal.x - s / 2, crystal.y - s / 2, s, s,  x,y,w,h)
 end
 
 function collision_check_all_crystals(x,y,w,h)
