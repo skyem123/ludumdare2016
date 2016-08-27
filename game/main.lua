@@ -84,6 +84,7 @@ crystal_render_list = {
 
 function update_crystal_render_list()
     for i,crystal in pairs(crystals) do
+        --[[
         crystal_render_list[i] = {
             crystal.r,
             crystal.g,
@@ -92,6 +93,8 @@ function update_crystal_render_list()
             crystal.y,
             crystal.label,
         }
+        ]]
+        crystal_render_list[i] = crystal
     end
 end
 
