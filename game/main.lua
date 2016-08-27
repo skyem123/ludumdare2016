@@ -270,7 +270,7 @@ function love.mousepressed(x, y, button, istouch)
 
         local do_not_add = false
 
-        if target_id ~= nil then
+        if (link_id ~= nil) and (target_id ~= nil) then
             if target_id == link_id then do_not_add = true end
 
             for i,link in pairs(crystals[link_id].links) do
