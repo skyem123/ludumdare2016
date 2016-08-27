@@ -55,13 +55,19 @@ end
 
 -- TODO: Link from crystal objects?
 link_list = {
-    {255, 255, 255, 42, 42, 128, 84}
+    {255, 255, 255, 1,2}
 }
 
-function render_link(r, g, b, x1, y1, x2, y2)
+function render_link(r, g, b, l_1, l_2)
     old = {love.graphics.getColor()}
 
     love.graphics.setColor(r, g, b)
+
+    local x1 = crystal_list[l_1][4]
+    local y1 = crystal_list[l_1][5]
+    local x2 = crystal_list[l_2][4]
+    local y2 = crystal_list[l_2][5]
+
     love.graphics.line(x1, y1, x2, y2)
 
     love.graphics.setColor(unpack(old))
