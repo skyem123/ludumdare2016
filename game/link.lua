@@ -34,13 +34,15 @@ function Link:collision_check(link)
   local o3 = link.c1:orientation(link.c2, self.c1)
   local o4 = link.c1:orientation(link.c2, self.c2)
 
+  if self.c1 == link.c1 or self.c2 == link.c2 then
+    return false
+  end
+
   if (o1 ~= o2 and o3 ~= o4) then
     return true
   end
 
-  if self.c1 == link.c1 or self.c2 == link.c2 then
-      return false
-  elseif (o1 == 0 and self.c1.onSeg(link.c1, self.c2)) then
+  if (o1 == 0 and self.c1.onSeg(link.c1, self.c2)) then
     return true
   elseif (o2 == 0 and self.c1.onSeg(link.c2, self.c2)) then
     return true
