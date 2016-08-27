@@ -29,38 +29,26 @@ function Link:draw()
 end
 
 function Link:collision_check(link)
-  return false -- TODO
-end
+  local o1 = self.c1.orientation(self.c2, link.c1)
+  local o2 = self.c1.orientation(self.c2, link.c2)
+  local o3 = link.c1.orientation(link.c2, self.c1)
+  local o4 = link.c1.orientation(link.c2, self.c2)
 
-function Link:solve_line()
-  local this = self
-  return function (x)
-    return this.slope() * (x - this.c1.x) + this.c1.y1
+  if (o1 ~= o2 and o3 ~= o4) then
+    return true
   end
-end
 
-function Link:same_line(link)
-  local function same_coord(a, b)
-    return a.x == b.x and a.y == b.y
-  end
-  return same_coord(self.c1, link.c1) and same_coord(self.c2, link.c2)
-end
-
-function Link:para_check(link)
-  return self.slope() == link.slope()
-end
-
-function Link:slope()
-  if (self.c1.x < self.c2.x) then
-    start = self.c1
-    target = self.c2
-  elseif (self.c1.x > self.c2.x) then
-    start = self.c2
-    target = self.c1
+  if (o1 == 0 and self.c1.onSeg(link.c1, self.c2)) then
+    return true
+  elseif (o2 == 0 and self.c1.onSeg(link.c2, self.c2)) then
+    return true
+  elseif (o3 == 0 and link.c1.onSeg(self.c1, link.c2)) then
+    return true
+  elseif (o4 == 0 and link.c1.onSeg(self.c2, link.c2)) then
+    return true
   else
-    return nil
+    return false
   end
-  return ((target.y - start.y) / (target.x - start.y))
 end
 
 return Link
