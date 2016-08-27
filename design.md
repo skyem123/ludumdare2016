@@ -10,4 +10,6 @@ Fixing clocks?
 Power source (hand crank) -> Power storage and regulation (spring / pendulum) -> gears -> display (watch hands)
 
 "Ancient" but higher tech than ours?
-crystals?
+crystals? analogue computer.
+cystals process input.
+Connections can't overlap.
