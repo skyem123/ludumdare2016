@@ -48,7 +48,6 @@ function save_crystal(coords, colour, label, links)
   return table.insert(crystals, Crystal:new({}, coords, colour, label, links))
 end
 
---save_crystal({256, 256}, {255, 255, 0}, "c", {})
 save_crystal({432,  44}, {255,   0,    0}, "1", {})
 save_crystal({324,  67}, {  0, 255,    0}, "2", {})
 save_crystal({ 42, 563}, {  0,   0,  255}, "3", {})
@@ -119,7 +118,7 @@ function collision_check_all_crystals(x,y,w,h)
       return i, crystal
     end
   end
-  return nil, nill
+  return nil, nil
 end
 
 
