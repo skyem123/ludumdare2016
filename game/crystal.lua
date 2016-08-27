@@ -9,8 +9,8 @@ Crystal = {
     ['size'] = 40
 }
 
-function Crystal.new(self, o, coords, colour, label, links)
-  o = Crystal.internalnew(o)
+function Crystal:new(o, coords, colour, label, links)
+  o = self:internalnew(o)
   o.x = coords[1] or self.x
   o.y = coords[2] or self.y
   o.r = colour[1] or self.r
@@ -21,15 +21,15 @@ function Crystal.new(self, o, coords, colour, label, links)
   return o
 end
 
-function Crystal.internalnew(o)
+function Crystal:internalnew(o)
   o = o or {}
   mt = {}
-  mt.__index = Crystal
+  mt.__index = self
   setmetatable(o, mt)
   return o
 end
 
-function Crystal.draw(self)
+function Crystal:draw()
   old = {love.graphics.getColor()}
 
   love.graphics.setColor(self.r, self.g, self.b)
@@ -43,6 +43,6 @@ function Crystal.draw(self)
   love.graphics.setColor(unpack(old))
 end
 
-function Crystal.collision_check(x,y,w,h)
+function Crystal:collision_check(x,y,w,h)
  -- TODO
 end

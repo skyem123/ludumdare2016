@@ -40,29 +40,8 @@ test = false;
 x_test = 0;
 y_test = 0;
 
-
-
-
-
-
-
-
-function new_crystal(coords, colour, label, links)
-    return {
-        ['x'] = coords[1],
-        ['y'] = coords[2],
-        ['r'] = colour[1],
-        ['g'] = colour[2],
-        ['b'] = colour[3],
-        ['links'] = links or {},
-        ['label'] = label or "",
-    }
-end
-
 -- Here's a list of crystals!
 crystals = {
-    --new_crystal({42, 42}, {0, 255, 255}, "a", {2}),
-    --new_crystal({128, 84}, {255, 0, 255}, "b", {})
 }
 
 function save_crystal(coords, colour, links)
@@ -84,16 +63,6 @@ crystal_render_list = {
 
 function update_crystal_render_list()
     for i,crystal in pairs(crystals) do
-        --[[
-        crystal_render_list[i] = {
-            crystal.r,
-            crystal.g,
-            crystal.b,
-            crystal.x,
-            crystal.y,
-            crystal.label,
-        }
-        ]]
         crystal_render_list[i] = crystal
     end
 end
