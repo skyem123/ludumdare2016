@@ -34,7 +34,12 @@ function Link:collision_check(link)
   local o3 = link.c1:orientation(link.c2, self.c1)
   local o4 = link.c1:orientation(link.c2, self.c2)
 
-  if self.c1 == link.c1 or self.c2 == link.c2 then
+  local function orall(a, b, c, d)
+    return a == c or a == d or b == c or b == d;
+  end
+
+
+  if orall(self.c1, self.c2, link.c1, link.c2) then
     return false
   end
 
