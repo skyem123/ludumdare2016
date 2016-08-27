@@ -43,34 +43,35 @@ y_test = 0;
 
 
 
-function new_crystal(coords, colour, links)
+function new_crystal(coords, colour, label, links)
     return {
         ['x'] = coords[1],
         ['y'] = coords[2],
         ['r'] = colour[1],
         ['g'] = colour[2],
         ['b'] = colour[3],
-        ['links'] = links or {}
+        ['links'] = links or {},
+        ['label'] = label or "",
     }
 end
 
 -- Here's a list of crystals!
 crystals = {
-    new_crystal({42, 42}, {0, 255, 255}, {2}),
-    new_crystal({128, 84}, {255, 0, 255}, {})
+    new_crystal({42, 42}, {0, 255, 255}, "a", {2}),
+    new_crystal({128, 84}, {255, 0, 255}, "b", {})
 }
 
 function save_crystal(coords, colour, links)
     return table.insert(crystals, new_crystal(coords, colour, links))
 end
 
-save_crystal({256, 256}, {255, 255, 0}, {})
+save_crystal({256, 256}, {255, 255, 0}, "c", {})
 
 
 
 
 crystal_render_list = {
-    -- {r, g, b, x, y}
+    -- {r, g, b, x, y, label}
 }
 
 function update_crystal_render_list()
@@ -80,7 +81,8 @@ function update_crystal_render_list()
             crystal.g,
             crystal.b,
             crystal.x,
-            crystal.y
+            crystal.y,
+            crystal.label,
         }
     end
 end
@@ -156,8 +158,26 @@ end
 
 
 
+function collision_check(x1,y1,w1,h1, x2,y2,w2,h2)
+  return x1 < x2+w2 and
+         x2 < x1+w1 and
+         y1 < y2+h2 and
+         y2 < y1+h1
+end
 
 
+function collision_check_crystal(crystal, x,y,w,h)
+    return collision_check(crystal.x-20, crystal.y-20, 40,40,  x,y,w,h)
+end
+
+function collision_check_all_crystals(x,y,w,h)
+    for i,crystal in ipairs(crystals) do
+        if collision_check_crystal(crystal, x,y,w,h) then
+            return i, crystal
+        end
+    end
+    return nil, nil
+end
 
 
 function love.draw()
@@ -174,6 +194,15 @@ function love.draw()
     -- render the links you are creating
     if linking then
         render_link_position(255,255,255, link_x, link_y, love.mouse.getPosition())
+    end
+
+    love.graphics.print(love.mouse.getX() .. ", " .. love.mouse.getY(), 0, 0)
+    --if collision_check_crystal(crystals[1],  love.mouse.getX(), love.mouse.getY(), 0, 0) then
+        --love.graphics.print("Test!", 0,10)
+    --end
+    local mouseover_id, mouseover_crystal = collision_check_all_crystals(love.mouse.getX(), love.mouse.getY(), 0, 0)
+    if mouseover_id ~= nil then
+        love.graphics.print("Mouse Over Crystal ID: " .. tostring(mouseover_id), 0,10)
     end
 end
 
@@ -218,11 +247,14 @@ function love.mousepressed(x, y, button, istouch)
         test = false
     end
 
-    if not linking then
+    if not linking and button == 1 then -- start linking
         link_x = x
         link_y = y
         linking = true
-    else
+    elseif button == 1 then -- finish linking
+        linking = false
+        -- TODO
+    elseif button == 2 then -- stop linking
         linking = false
     end
 end
