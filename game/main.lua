@@ -55,7 +55,7 @@ save_crystal({231, 334}, {255,  255,   0}, "4", {})
 save_crystal({ 744, 444}, {  0,  255, 255}, "5", {})
 save_crystal({ 444, 223}, {255,    0, 255}, "6", {})
 
-
+--[[
 crystal_render_list = {
     -- {r, g, b, x, y, label}
 }
@@ -65,9 +65,10 @@ function update_crystal_render_list()
         crystal_render_list[i] = crystal
     end
 end
+]]--
 
 function render_crystals()
-    for i,crystal in pairs(crystal_render_list) do
+    for i,crystal in pairs(crystals) do
         crystal:draw()
     end
 end
@@ -119,7 +120,7 @@ end
 
 
 function update_render_lists()
-    update_crystal_render_list()
+    --update_crystal_render_list()
     update_link_list()
 end
 
