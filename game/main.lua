@@ -1,5 +1,6 @@
 local Crystal = require 'crystal'
 local helpers = require 'helpers'
+local Link = require 'link'
 
 screen_displayed = nil
 game_paused = false
@@ -112,7 +113,7 @@ function love.draw()
 
   -- render the links you are creating
   if linking then
-    helpers.render_link_position(255,255,255, link_x, link_y, love.mouse.getPosition())
+    helpers.render_link_position({255,255,255}, link_x, link_y, love.mouse.getPosition())
   end
 
   love.graphics.print("Mouse at: " .. love.mouse.getX() .. ", " .. love.mouse.getY(), 0, 0)
@@ -202,7 +203,7 @@ function love.mousepressed(x, y, button, istouch)
 
       if not do_not_add then
         print("wut")
-        table.insert(link_crystal.links, target_crystal)
+        table.insert(link_crystal.links, Link:new(link_crystal, target_crystal))
       end
       --link_y, link_x, link_id, link_crystal, target_id, target_crystal = nil, nil, nil, nil, nil, nil
       update_render_lists()
