@@ -93,7 +93,7 @@ function update_link_list()
       link_list[i] = {
           crystal.r, crystal.g, crystal.b,
           crystal.x, crystal.y,
-          find_crystal_from_ID(crystals, link_dest).x, find_crystal_from_ID(crystals, link_dest).y
+          link_dest.x, link_dest.y
       }
     end
   end
@@ -109,15 +109,6 @@ function render_link_position(r, g, b, x1, y1, x2, y2)
   love.graphics.setColor(unpack(old))
 end
 
-function old_render_link_crystal(r, g, b, l_1, l_2)
-  local x1 = crystal_render_list[l_1][4]
-  local y1 = crystal_render_list[l_1][5]
-  local x2 = crystal_render_list[l_2][4]
-  local y2 = crystal_render_list[l_2][5]
-
-  render_link_position(r, g, b, x1, y1, x2, y2)
-end
-
 function render_links()
   for i,link in pairs(link_list) do
     render_link_position(unpack(link))
@@ -129,13 +120,18 @@ function update_render_lists()
   update_link_list()
 end
 
-function collision_check_all_crystals(x,y,w,h)
+function collision_check_all_crystals_ID(x,y,w,h)
   for i,crystal in pairs(crystals) do
     if crystal:collision_check(x,y,w,h) then
       return crystal.ID, crystal
     end
   end
   return nil, nil
+end
+
+function collision_check_all_crystals(x,y,w,h)
+    local _, crystal = collision_check_all_crystals_ID(x,y,w,h)
+    return crystal
 end
 
 
@@ -156,7 +152,7 @@ function love.draw()
   end
 
   love.graphics.print("Mouse at: " .. love.mouse.getX() .. ", " .. love.mouse.getY(), 0, 0)
-  local mouseover_id, mouseover_crystal = collision_check_all_crystals(love.mouse.getX(), love.mouse.getY(), 0, 0)
+  local mouseover_id, mouseover_crystal = collision_check_all_crystals_ID(love.mouse.getX(), love.mouse.getY(), 0, 0)
   if mouseover_id ~= nil then
     love.graphics.print("Mouse Over Crystal ID: " .. tostring(mouseover_id), 0,10)
   end
@@ -212,20 +208,19 @@ function love.mousepressed(x, y, button, istouch)
   if not linking and button == 1 then -- start linking
     link_x = x
     link_y = y
-    link_id, link_crystal = collision_check_all_crystals(x,y,0,0)
+    link_id, link_crystal = collision_check_all_crystals_ID(x,y,0,0)
     linking = true
   elseif button == 1 then -- finish linking
     linking = false
-    -- TODO
-    target_id, target_crystal = collision_check_all_crystals(x,y,0,0)
+    target_crystal = collision_check_all_crystals(x,y,0,0)
 
     local do_not_add = false
 
-    if (link_id ~= nil) and (target_id ~= nil) then
-      if target_id == link_id then do_not_add = true end
+    if (link_crystal ~= nil) and (target_crystal ~= nil) then
+      if target_crystal == link_crystal then do_not_add = true end
 
       for i,link in pairs(link_crystal.links) do
-        if target_id == link then
+        if target_crystal == link then
           link_crystal.links[i] = nil
           do_not_add = true
           print("gah")
@@ -233,7 +228,7 @@ function love.mousepressed(x, y, button, istouch)
       end
 
       for i,link in pairs(target_crystal.links) do
-        if link_id == link then
+        if link_crystal == link then
           target_crystal.links[i] = nil
           do_not_add = true
           print("guh")
@@ -242,9 +237,9 @@ function love.mousepressed(x, y, button, istouch)
 
       if not do_not_add then
         print("wut")
-        table.insert(link_crystal.links, target_id)
+        table.insert(link_crystal.links, target_crystal)
       end
-      link_y, link_x, link_id, link_crystal, target_id, target_crystal = nil, nil, nil, nil, nil, nil
+      --link_y, link_x, link_id, link_crystal, target_id, target_crystal = nil, nil, nil, nil, nil, nil
       update_link_list()
     end
   elseif button == 2 then -- stop linking
