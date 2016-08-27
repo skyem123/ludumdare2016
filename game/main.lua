@@ -26,6 +26,53 @@ test = false;
 x_test = 0;
 y_test = 0;
 
+crystal_list = {
+    -- {r, g, b, x, y}
+    {0,   255, 255, 42, 42, 'a'},
+    {255,   0, 255, 128, 84, 'b'}
+}
+
+function render_crystal(r, g, b, x, y, label)
+    old = {love.graphics.getColor()}
+
+    love.graphics.setColor(r, g, b)
+    love.graphics.circle("fill", x, y, 15, 4)
+
+    if label ~= nil then
+        love.graphics.setColor(255-r, 255-g, 255-b)
+        love.graphics.print(tostring(label), x - 4, y - 7)
+    end
+
+    love.graphics.setColor(unpack(old))
+end
+
+function render_crystals()
+    for i,crystal in ipairs(crystal_list) do
+        render_crystal(unpack(crystal))
+    end
+end
+
+
+-- TODO: Link from crystal objects?
+link_list = {
+    {255, 255, 255, 42, 42, 128, 84}
+}
+
+function render_link(r, g, b, x1, y1, x2, y2)
+    old = {love.graphics.getColor()}
+
+    love.graphics.setColor(r, g, b)
+    love.graphics.line(x1, y1, x2, y2)
+
+    love.graphics.setColor(unpack(old))
+end
+
+function render_links()
+    for i,link in ipairs(link_list) do
+        render_link(unpack(link))
+    end
+end
+
 function love.draw()
     if screen_displayed ~= nil then
         game_paused = true
@@ -33,7 +80,9 @@ function love.draw()
         return
     end
     -- the game should be rendered here.
-    if test then love.graphics.circle("fill", x_test, y_test, 10, 4) end
+    --if test then render_crystal(0, 128, 255, x_test, y_test) end
+    render_links()
+    render_crystals()
 end
 
 function love.load()
