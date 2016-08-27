@@ -19,8 +19,8 @@ Crystal Types:
 Other Mechanics:
 
 * Connections are one way, in and out.  
-* The greater the absolute value of the number a connection carries,
-  the greater the frequency of its wave.  
+* The greater the absolute value of the number a connection carries, the greater the frequency of its wave.
+* To indicated the source of the wave, the crystal that the wave comes from will be the same colour as the wave itself.
 * Positive numbers have a green wave, negatives red.  
 * Connections may not overlap.  
 * Connections may not pass through walls.  

@@ -59,17 +59,21 @@ end
 
 -- Here's a list of crystals!
 crystals = {
-    new_crystal({42, 42}, {0, 255, 255}, "a", {2}),
-    new_crystal({128, 84}, {255, 0, 255}, "b", {})
+    --new_crystal({42, 42}, {0, 255, 255}, "a", {2}),
+    --new_crystal({128, 84}, {255, 0, 255}, "b", {})
 }
 
 function save_crystal(coords, colour, links)
     return table.insert(crystals, new_crystal(coords, colour, links))
 end
 
-save_crystal({256, 256}, {255, 255, 0}, "c", {})
-
-
+--save_crystal({256, 256}, {255, 255, 0}, "c", {})
+save_crystal({432,  44}, {255,   0,    0}, "1", {})
+save_crystal({324,  67}, {  0, 255,    0}, "2", {})
+save_crystal({ 42, 563}, {  0,   0,  255}, "3", {})
+save_crystal({231, 334}, {255,  255,   0}, "4", {})
+save_crystal({ 744, 444}, {  0,  255, 255}, "5", {})
+save_crystal({ 444, 223}, {255,    0, 255}, "6", {})
 
 
 crystal_render_list = {
@@ -293,6 +297,7 @@ function love.mousepressed(x, y, button, istouch)
                 print("wut")
                 table.insert(link_crystal.links, target_id)
             end
+            link_y, link_x, link_id, link_crystal, target_id, target_crystal = nil, nil, nil, nil, nil, nil
             update_link_list()
         end
     elseif button == 2 then -- stop linking
