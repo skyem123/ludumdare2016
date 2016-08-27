@@ -56,7 +56,8 @@ function Crystal:drawlinks()
 end
 
 function Crystal:collision_check(x,y,w,h)
- -- TODO
+    local s = self.size
+    return helpers.collision_check(self.x - s / 2, self.y - s / 2, s, s,  x,y,w,h)
 end
 
 end

@@ -113,15 +113,9 @@ function update_render_lists()
   update_link_list()
 end
 
-
-function collision_check_crystal(crystal, x,y,w,h)
-  local s = crystal.size
-  return helpers.collision_check(crystal.x - s / 2, crystal.y - s / 2, s, s,  x,y,w,h)
-end
-
 function collision_check_all_crystals(x,y,w,h)
   for i,crystal in pairs(crystals) do
-    if collision_check_crystal(crystal, x,y,w,h) then
+    if crystal:collision_check(x,y,w,h) then
       return i, crystal
     end
   end
@@ -146,9 +140,6 @@ function love.draw()
   end
 
   love.graphics.print("Mouse at: " .. love.mouse.getX() .. ", " .. love.mouse.getY(), 0, 0)
-  --if collision_check_crystal(crystals[1],  love.mouse.getX(), love.mouse.getY(), 0, 0) then
-      --love.graphics.print("Test!", 0,10)
-  --end
   local mouseover_id, mouseover_crystal = collision_check_all_crystals(love.mouse.getX(), love.mouse.getY(), 0, 0)
   if mouseover_id ~= nil then
     love.graphics.print("Mouse Over Crystal ID: " .. tostring(mouseover_id), 0,10)
