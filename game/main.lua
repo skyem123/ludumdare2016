@@ -41,11 +41,10 @@ x_test = 0;
 y_test = 0;
 
 -- Here's a list of crystals!
-crystals = {
-}
+crystals = {}
 
-function save_crystal(coords, colour, links)
-    return table.insert(crystals, Crystal:new(coords, colour, links))
+function save_crystal(coords, colour, label, links)
+    return table.insert(crystals, Crystal:new({}, coords, colour, label, links))
 end
 
 --save_crystal({256, 256}, {255, 255, 0}, "c", {})
