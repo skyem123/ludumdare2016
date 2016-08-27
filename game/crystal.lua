@@ -11,6 +11,8 @@ local Crystal = {
 
 do
 
+local helpers = require 'helpers'
+
 function Crystal:new(o, coords, colour, label, links)
   o = self:internalnew(o)
   o.x = coords[1] or self.x

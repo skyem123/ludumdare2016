@@ -1,4 +1,5 @@
 local Crystal = require 'crystal'
+local helpers = require 'helpers'
 
 screen_displayed = nil
 game_paused = false
@@ -113,19 +114,9 @@ function update_render_lists()
 end
 
 
-
-
-function collision_check(x1,y1,w1,h1, x2,y2,w2,h2)
-  return x1 < x2+w2 and
-         x2 < x1+w1 and
-         y1 < y2+h2 and
-         y2 < y1+h1
-end
-
-
 function collision_check_crystal(crystal, x,y,w,h)
   local s = crystal.size
-  return collision_check(crystal.x - s / 2, crystal.y - s / 2, s, s,  x,y,w,h)
+  return helpers.collision_check(crystal.x - s / 2, crystal.y - s / 2, s, s,  x,y,w,h)
 end
 
 function collision_check_all_crystals(x,y,w,h)
