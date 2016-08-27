@@ -13,6 +13,15 @@ function display_welcome()
     , 0, 0)
 end
 
+function render_pause_screen()
+    love.graphics.print(
+    "Game Paused"
+    , 50, 50, 0, 1.5)
+    love.graphics.print(
+    "Press <ENTER> to continue."
+    , 50, 80, 0, 1)
+end
+
 test = false;
 x_test = 0;
 y_test = 0;
@@ -42,6 +51,8 @@ function love.keypressed(key)
     end
     if key == 'w' then
         screen_displayed = display_welcome
+    elseif key == 'p' then
+        screen_displayed = render_pause_screen
     end
 end
 
