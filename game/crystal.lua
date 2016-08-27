@@ -10,7 +10,7 @@ Crystal = {
 }
 
 function Crystal.new(self, o, coords, colour, label, links)
-  o = Crystal:internalnew(o)
+  o = Crystal.internalnew(o)
   o.x = coords[1] or self.x
   o.y = coords[2] or self.y
   o.r = colour[1] or self.r
