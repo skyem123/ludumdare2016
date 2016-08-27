@@ -121,7 +121,7 @@ function update_link_list()
         for _,link_dest in ipairs(crystal.links) do
             i = i+1
             link_list[i] = {
-                255, 255, 255,
+                crystal.r, crystal.g, crystal.b,
                 crystal.x, crystal.y,
                 crystals[link_dest].x, crystals[link_dest].y
             }
