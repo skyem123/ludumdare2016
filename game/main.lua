@@ -199,7 +199,7 @@ function love.mousepressed(x, y, button, istouch)
     if (link_crystal ~= nil) and (target_crystal ~= nil) then
       if target_crystal == link_crystal then do_not_add = true end
       for i,link in pairs(link_crystal.links) do
-        if target_crystal == link.c2 then
+        if target_crystal == link.destination then
           link_crystal.links[i] = nil
           do_not_add = true
           print("gah")
@@ -207,7 +207,7 @@ function love.mousepressed(x, y, button, istouch)
       end
 
       for i,link in pairs(target_crystal.links) do
-        if link_crystal == link.c2 then
+        if link_crystal == link.destination then
           target_crystal.links[i] = nil
           do_not_add = true
           print("guh")
@@ -258,7 +258,7 @@ function love.update(dt)
         new_values[crystal.ID] = crystal.operation(old_values[crystal.ID], old_inputs[crystal.ID], 0)
         -- now, update the list of inputs!
         for _,link in pairs(crystal.links) do
-            new_inputs[link.c2.ID] = new_values[crystal.ID]
+            new_inputs[link.destination.ID] = new_values[crystal.ID]
         end
     end
     -- Save the values to the crystals!
