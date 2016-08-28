@@ -2,7 +2,7 @@ local Crystal = {
     ['x'] = 0,
     ['y'] = 0,
     ['colour'] = {0, 0, 0},
-    ['links'] = {},
+    ['linked_from'] = {},
     ['label'] = "",
     ['size'] = 40,
     ['ID'] = 0,
@@ -17,13 +17,13 @@ local helpers = require 'helpers'
 
 local nextID = 1
 
-function Crystal:new(o, coords, colour, label, links, operation)
+function Crystal:new(o, coords, colour, label, linked_from, operation)
   o = self:internalnew(o or {})
   coords = coords or {}
   o.x = coords[1] or self.x
   o.y = coords[2] or self.y
   o.colour = colour or self.color
-  o.links = links or self.links
+  o.linked_from = linked_from or self.linked_from
   o.label = label or self.label
   o.ID = nextID
   o.operation = operation or self.operation
@@ -58,7 +58,7 @@ function Crystal:func(x)
 end
 
 function Crystal:drawlinks()
-    for _,link in pairs(self.links) do
+    for _,link in pairs(self.linked_from) do
       link:draw()
     end
 end

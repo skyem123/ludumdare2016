@@ -198,17 +198,18 @@ function love.mousepressed(x, y, button, istouch)
 
     if (link_crystal ~= nil) and (target_crystal ~= nil) then
       if target_crystal == link_crystal then do_not_add = true end
-      for i,link in pairs(link_crystal.links) do
-        if target_crystal == link.destination then
-          link_crystal.links[i] = nil
+
+      for i,link in pairs(target_crystal.linked_from) do
+        if link_crystal == link.source then
+          target_crystal.linked_from[i] = nil
           do_not_add = true
           print("gah")
         end
       end
 
-      for i,link in pairs(target_crystal.links) do
-        if link_crystal == link.destination then
-          target_crystal.links[i] = nil
+      for i,link in pairs(link_crystal.linked_from) do
+        if target_crystal == link.source then
+          link_crystal.linked_from[i] = nil
           do_not_add = true
           print("guh")
         end
@@ -219,14 +220,14 @@ function love.mousepressed(x, y, button, istouch)
         local collide = false
         local the_link = Link:new(link_crystal, target_crystal)
         for _,crystal in pairs(crystals) do
-            for _,link in pairs(crystal.links) do
+            for _,link in pairs(crystal.linked_from) do -- TODO: Is this correct?
                 if (the_link:collision_check(link)) then
                     collide = true
                 end
             end
         end
 
-        if not collide then table.insert(link_crystal.links, Link:new(link_crystal, target_crystal)) end
+        if not collide then table.insert(target_crystal.linked_from, Link:new(link_crystal, target_crystal)) end
       end
       --link_y, link_x, link_id, link_crystal, target_id, target_crystal = nil, nil, nil, nil, nil, nil
       update_render_lists()
@@ -257,7 +258,7 @@ function love.update(dt)
         -- TODO: How will two inputs work?
         new_values[crystal.ID] = crystal.operation(old_values[crystal.ID], old_inputs[crystal.ID], 0)
         -- now, update the list of inputs!
-        for _,link in pairs(crystal.links) do
+        for _,link in pairs(crystal.linked_from) do
             new_inputs[link.destination.ID] = new_values[crystal.ID]
         end
     end
