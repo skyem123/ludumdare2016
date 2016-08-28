@@ -97,19 +97,17 @@ function Link:drawwave()
     local coords = self:calcball(vx, vy, function (x)
       return amp * math.sin(x)
     end)
-    love.graphics.rotate(-math.pi/2 - self:angle() + math.pi/2)
     love.graphics.ellipse("fill", coords[1], coords[2], 2)
-    love.graphics.rotate(math.pi/2 + self:angle() - math.pi/2)
   end
 
   self.off = self.off + 0.1
-  if self.off == math.pi then self.off = 0 end
   love.graphics.pop()
 end
 
 function Link:calcball(x, y, func)
-  local perpangle = self:angle()
-  local dist = (self.source.x - x) ^ 2 + (self.source.y - y) ^ 2
+  local perpangle = self:angle() - math.pi/2
+
+  local dist = x ^ 2 + y ^ 2
   local h = func(dist + self.off)
   return {x + math.cos(perpangle) * h, y + math.sin(perpangle) * h}
 end
