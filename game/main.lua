@@ -1,6 +1,7 @@
 local Crystal = require 'crystal'
 local helpers = require 'helpers'
 local Link = require 'link'
+local audio = require 'audio'
 
 screen_displayed = nil
 game_paused = false
@@ -188,6 +189,9 @@ function love.mousepressed(x, y, button, istouch)
     link_y = y
     link_id, link_crystal = collision_check_all_crystals_ID(x,y,0,0)
     linking = true
+    if link_crystal ~= nil then
+        audio['select']:play()
+    end
   elseif button == 1 then -- finish linking
     linking = false
     target_crystal = collision_check_all_crystals(x,y,0,0)
@@ -227,7 +231,10 @@ function love.mousepressed(x, y, button, istouch)
             end
         end
 
-        if not collide then table.insert(target_crystal.linked_from, Link:new(link_crystal, target_crystal)) end
+        if not collide then
+            table.insert(target_crystal.linked_from, Link:new(link_crystal, target_crystal))
+            audio['link_finished']:play()
+        end
       end
       --link_y, link_x, link_id, link_crystal, target_id, target_crystal = nil, nil, nil, nil, nil, nil
       update_render_lists()
@@ -263,7 +270,7 @@ function love.update(dt)
     for _,crystal in pairs(crystals) do for _,link in pairs(crystal.linked_from) do
         new_inputs[crystal.ID] = new_values[link.source.ID]
     end end
-    
+
     -- Save the values to the crystals!
     for _,crystal in pairs(crystals) do
         crystal.value = new_values[crystal.ID]
