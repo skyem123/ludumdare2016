@@ -48,8 +48,8 @@ y_test = 0;
 -- Here's a list of crystals!
 crystals = {}
 
-function save_crystal(coords, colour, label, links)
-  return table.insert(crystals, Crystal:new({}, coords, colour, label, links))
+function save_crystal(...)
+  return table.insert(crystals, Crystal:new({}, ...))
 end
 
 function load_level(name)
@@ -122,6 +122,7 @@ function love.draw()
   local mouseover_id, mouseover_crystal = collision_check_all_crystals_ID(love.mouse.getX(), love.mouse.getY(), 0, 0)
   if mouseover_id ~= nil then
     love.graphics.print("Mouse Over Crystal ID: " .. tostring(mouseover_id), 0,10)
+    love.graphics.print("Mouse over Crystal value: " .. tostring(mouseover_crystal.value), 0, 60)
   end
   if linking then
     love.graphics.print("Linking from: " .. link_x .. ", " .. link_y, 0, 20)
@@ -132,6 +133,7 @@ function love.draw()
 
   love.graphics.print("DT: " .. last_dt, 0, 40)
   love.graphics.print("Time: " .. total_dt, 0, 50)
+
 
 end
 
@@ -233,6 +235,24 @@ function love.mousepressed(x, y, button, istouch)
 end
 
 function love.update(dt)
-   last_dt = dt
-   total_dt = total_dt + dt
+    if game_paused then return end
+    last_dt = dt
+    total_dt = total_dt + dt
+
+    -- Save the value of every cystal
+    local old_values = {}
+    for k,crystal in pairs(crystals) do
+        old_values[k] = crystal.value
+    end
+    -- Find out and store the new values...
+    local new_values = {}
+    for k,crystal in pairs(crystals) do
+        -- TODO: Find what on earth this is linked to!!
+        -- TODO: Abstract a bit?
+        new_values[k] = crystal.operation(old_values[k], 0, 0)
+    end
+    -- Save the values to the crystals!
+    for k,v in pairs(new_values) do
+        crystals[k].value = v
+    end
 end

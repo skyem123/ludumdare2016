@@ -16,7 +16,7 @@ local helpers = require 'helpers'
 
 local nextID = 1
 
-function Crystal:new(o, coords, colour, label, links)
+function Crystal:new(o, coords, colour, label, links, operation)
   o = self:internalnew(o or {})
   coords = coords or {}
   o.x = coords[1] or self.x
@@ -25,6 +25,7 @@ function Crystal:new(o, coords, colour, label, links)
   o.links = links or self.links
   o.label = label or self.label
   o.ID = nextID
+  o.operation = operation or self.operation
   nextID = nextID + 1
   return o
 end
