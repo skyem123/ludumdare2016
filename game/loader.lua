@@ -24,5 +24,29 @@ function loader.load_level(level, name)
 	end
 end
 
+function loader.unload_list()
+	loader.list = nil
+	loader.position = nil
+end
+
+function loader.load_list(name)
+	local file = assert(io.open("levels/" .. name .. ".txt"))
+	loader.list = {}
+	for line in file:lines() do
+		table.insert(loader.list, line)
+	end
+	loader.position = 0
+	file:close()
+end
+
+function loader.next_level(level)
+	if loader.list ~= nil and loader.position ~= nil then
+		loader.position = loader.position + 1
+		if loader.position <= #loader.list then
+			loader.load_level(level, loader.list[loader.position])
+		end
+	end
+end
+
 
 return loader

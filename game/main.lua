@@ -128,7 +128,9 @@ end
 
 
 function love.load()
-    loader.load_level(level, "test")
+    --loader.load_level(level, "test")
+    loader.load_list("list")
+    loader.next_level(level)
     screen_displayed = display_welcome
     update_render_lists()
 end
