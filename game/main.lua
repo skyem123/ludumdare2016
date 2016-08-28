@@ -257,11 +257,13 @@ function love.update(dt)
         -- TODO: Abstract a bit?
         -- TODO: How will two inputs work?
         new_values[crystal.ID] = crystal.operation(old_values[crystal.ID], old_inputs[crystal.ID], 0)
-        -- now, update the list of inputs!
-        for _,link in pairs(crystal.linked_from) do
-            new_inputs[link.destination.ID] = new_values[crystal.ID]
-        end
     end
+
+    -- Now update the list of inputs!
+    for _,crystal in pairs(crystals) do for _,link in pairs(crystal.linked_from) do
+        new_inputs[crystal.ID] = new_values[link.source.ID]
+    end end
+    
     -- Save the values to the crystals!
     for _,crystal in pairs(crystals) do
         crystal.value = new_values[crystal.ID]
