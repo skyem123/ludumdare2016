@@ -45,15 +45,16 @@ test = false;
 x_test = 0;
 y_test = 0;
 
--- Here's a list of crystals!
-crystals = {}
+level = {}
+level.crystals = {}
 
 function save_crystal(...)
-  return table.insert(crystals, Crystal:new({}, ...))
+  print(level.crystals)
+  return table.insert(level.crystals, Crystal:new({}, ...))
 end
 
 function load_level(name)
-    level = require("levels/" .. name)
+    local level = require("levels/" .. name)
     -- load the level
     for _,item in pairs(level) do
         if item[1] == "crystal" then
@@ -64,7 +65,7 @@ end
 
 
 function render_crystals()
-  for i,crystal in pairs(crystals) do
+  for i,crystal in pairs(level.crystals) do
     crystal:draw()
   end
 end
@@ -78,7 +79,7 @@ function find_crystal_from_ID(crystal_list, ID)
 end
 
 function render_links()
-    for _,crystal in pairs(crystals) do
+    for _,crystal in pairs(level.crystals) do
         crystal:drawlinks()
     end
 end
@@ -89,7 +90,7 @@ function update_render_lists()
 end
 
 function collision_check_all_crystals_ID(x,y,w,h)
-  for i,crystal in pairs(crystals) do
+  for i,crystal in pairs(level.crystals) do
     if crystal:collision_check(x,y,w,h) then
       return crystal.ID, crystal
     end
@@ -219,7 +220,7 @@ function love.mousepressed(x, y, button, istouch)
         print("wut")
         local collide = false
         local the_link = Link:new(link_crystal, target_crystal)
-        for _,crystal in pairs(crystals) do
+        for _,crystal in pairs(level.crystals) do
             for _,link in pairs(crystal.linked_from) do -- TODO: Is this correct?
                 if (the_link:collision_check(link)) then
                     collide = true
@@ -245,14 +246,14 @@ function love.update(dt)
     -- Save the value of every cystal
     local old_values = {}
     local old_inputs = {}
-    for _,crystal in pairs(crystals) do
+    for _,crystal in pairs(level.crystals) do
         old_values[crystal.ID] = crystal.value
         old_inputs[crystal.ID] = crystal.input
     end
     -- Find out and store the new values...
     local new_values = {}
     local new_inputs = {}
-    for _,crystal in pairs(crystals) do
+    for _,crystal in pairs(level.crystals) do
         -- TODO: Find what on earth this is linked to!!
         -- TODO: Abstract a bit?
         -- TODO: How will two inputs work?
@@ -260,12 +261,12 @@ function love.update(dt)
     end
 
     -- Now update the list of inputs!
-    for _,crystal in pairs(crystals) do for _,link in pairs(crystal.linked_from) do
+    for _,crystal in pairs(level.crystals) do for _,link in pairs(crystal.linked_from) do
         new_inputs[crystal.ID] = new_values[link.source.ID]
     end end
-    
+
     -- Save the values to the crystals!
-    for _,crystal in pairs(crystals) do
+    for _,crystal in pairs(level.crystals) do
         crystal.value = new_values[crystal.ID]
         crystal.input = new_inputs[crystal.ID]
     end
