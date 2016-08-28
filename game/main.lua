@@ -1,6 +1,7 @@
 local Crystal = require 'crystal'
 local helpers = require 'helpers'
 local Link = require 'link'
+local loader = require 'loader'
 
 screen_displayed = nil
 game_paused = false
@@ -45,23 +46,7 @@ test = false;
 x_test = 0;
 y_test = 0;
 
-level = {}
-level.crystals = {}
-
-function save_crystal(...)
-  print(level.crystals)
-  return table.insert(level.crystals, Crystal:new({}, ...))
-end
-
-function load_level(name)
-    local level = require("levels/" .. name)
-    -- load the level
-    for _,item in pairs(level) do
-        if item[1] == "crystal" then
-            save_crystal(unpack(item, 2))
-        end
-    end
-end
+level = loader.new_level()
 
 
 function render_crystals()
@@ -143,7 +128,7 @@ end
 
 
 function love.load()
-    load_level("test")
+    loader.load_level(level, "test")
     screen_displayed = display_welcome
     update_render_lists()
 end
