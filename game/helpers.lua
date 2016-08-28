@@ -19,4 +19,16 @@ function helpers.render_link_position(colour, x1, y1, x2, y2)
     helpers.wrapWithColour(colour, love.graphics.line, x1, y1, x2, y2)
 end
 
+function helpers.range(from, to, step)
+  step = step or 1
+  return function(_, lastvalue)
+    local nextvalue = lastvalue + step
+    if step > 0 and nextvalue <= to or step < 0 and nextvalue >= to or
+       step == 0
+    then
+      return nextvalue
+    end
+  end, nil, from - step
+end
+
 return helpers
