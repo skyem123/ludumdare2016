@@ -243,18 +243,27 @@ function love.update(dt)
 
     -- Save the value of every cystal
     local old_values = {}
-    for k,crystal in pairs(crystals) do
-        old_values[k] = crystal.value
+    local old_inputs = {}
+    for _,crystal in pairs(crystals) do
+        old_values[crystal.ID] = crystal.value
+        old_inputs[crystal.ID] = crystal.input
     end
     -- Find out and store the new values...
     local new_values = {}
-    for k,crystal in pairs(crystals) do
+    local new_inputs = {}
+    for _,crystal in pairs(crystals) do
         -- TODO: Find what on earth this is linked to!!
         -- TODO: Abstract a bit?
-        new_values[k] = crystal.operation(old_values[k], 0, 0)
+        -- TODO: How will two inputs work?
+        new_values[crystal.ID] = crystal.operation(old_values[crystal.ID], old_inputs[crystal.ID], 0)
+        -- now, update the list of inputs!
+        for _,link in pairs(crystal.links) do
+            new_inputs[link.c2.ID] = new_values[crystal.ID]
+        end
     end
     -- Save the values to the crystals!
-    for k,v in pairs(new_values) do
-        crystals[k].value = v
+    for _,crystal in pairs(crystals) do
+        crystal.value = new_values[crystal.ID]
+        crystal.input = new_inputs[crystal.ID]
     end
 end

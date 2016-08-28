@@ -7,7 +7,8 @@ local Crystal = {
     ['size'] = 40,
     ['ID'] = 0,
     ['value'] = 0,
-    ['operation'] = function(current, a, b) return current end
+    ['operation'] = function(current, a, b) return current end,
+    ['input'] = 0,
 }
 
 do
