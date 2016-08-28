@@ -131,8 +131,10 @@ function love.draw()
     end
   end
 
-  love.graphics.print("DT: " .. last_dt, 0, 40)
-  love.graphics.print("Time: " .. total_dt, 0, 50)
+  love.graphics.print("DT: " .. love.timer.getDelta(), 0, 40)
+  love.graphics.print("Average DT: " .. love.timer.getAverageDelta(), 0, 80)
+  love.graphics.print("Time (excluding pause): " .. total_dt, 0, 50)
+  love.graphics.print("FPS: " .. love.timer.getFPS(), 0, 70)
 
 
 end
