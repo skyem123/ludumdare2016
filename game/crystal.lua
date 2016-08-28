@@ -6,6 +6,8 @@ local Crystal = {
     ['label'] = "",
     ['size'] = 40,
     ['ID'] = 0,
+    ['value'] = 0,
+    ['operation'] = function(current, a, b) return current end
 }
 
 do

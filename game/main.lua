@@ -12,6 +12,9 @@ link_y = 0
 link_id = nil
 link_crystal = nil
 
+last_dt = 0
+total_dt = 0
+
 function display_welcome()
   love.graphics.print(
   "Welcome to our Ludum Dare game for Ludum Dare 36!\n" ..
@@ -126,7 +129,13 @@ function love.draw()
         love.graphics.print("Linking from ID: " .. link_id, 0, 30)
     end
   end
+
+  love.graphics.print("DT: " .. last_dt, 0, 40)
+  love.graphics.print("Time: " .. total_dt, 0, 50)
+
 end
+
+
 
 function love.load()
     load_level("test")
@@ -221,4 +230,9 @@ function love.mousepressed(x, y, button, istouch)
   elseif button == 2 then -- stop linking
     linking = false
   end
+end
+
+function love.update(dt)
+   last_dt = dt
+   total_dt = total_dt + dt
 end
