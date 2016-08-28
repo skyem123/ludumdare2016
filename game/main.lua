@@ -190,6 +190,7 @@ function love.mousepressed(x, y, button, istouch)
     link_id, link_crystal = collision_check_all_crystals_ID(x,y,0,0)
     linking = true
     if link_crystal ~= nil then
+        audio['select']:stop()
         audio['select']:play()
     end
   elseif button == 1 then -- finish linking
@@ -233,6 +234,7 @@ function love.mousepressed(x, y, button, istouch)
 
         if not collide then
             table.insert(target_crystal.linked_from, Link:new(link_crystal, target_crystal))
+            audio['link_finished']:stop()
             audio['link_finished']:play()
         end
       end
