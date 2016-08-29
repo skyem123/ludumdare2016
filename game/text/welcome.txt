@@ -7,7 +7,10 @@ Anyway, link the crystals and you'll be fine, okay?
 Good Luck!
 
 
-Press the <ENTER> key to get started. (It exits these screens)
 Press the 'R' key to display the rules.
+After you understand the rules, press the <ENTER> key to get started! (It exits these screens)
+
+Useful Keys:
 Press the 'P' key to pause.
 Press the 'W' key for this welcome screen.
+Press the 'C' key for credits.

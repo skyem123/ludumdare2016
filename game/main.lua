@@ -153,6 +153,8 @@ function love.keypressed(key)
     screen_displayed = screens.welcome
   elseif key == 'r' then
     screen_displayed = screens.rules
+elseif key == 'c' then
+    screen_displayed = screens.credits
   elseif key == 'p' then
     if screen_displayed == screens.pause then
       screen_displayed = nil

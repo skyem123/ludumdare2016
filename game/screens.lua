@@ -9,8 +9,8 @@ local function new_text(name)
 	return data
 end
 
-local function load_text(name)
-	text[name] = new_text(name)
+local function load_text(name, as)
+	text[as or name] = new_text(name)
 end
 
 function screens.welcome()
@@ -28,11 +28,18 @@ function screens.pause()
     love.graphics.print(
     "Press <ENTER> or 'P' to unpause.\n" ..
     "Press 'R' to display the rules.\n" ..
-    "Press 'W' for the welcome screen."
+    "Press 'W' for the welcome screen.\n" ..
+	"Press 'C' for credits!"
     , 50, 80, 0, 1)
+end
+
+function screens.credits()
+	love.graphics.print("Press <ENTER> to continue...", 0, 0)
+	love.graphics.print(text["credits-b"], 300,40)
 end
 
 
 load_text("welcome")
 load_text("rules")
+load_text("credits-b")
 return screens
