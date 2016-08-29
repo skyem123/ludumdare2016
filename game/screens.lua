@@ -3,9 +3,10 @@ local screens = {}
 local text = {}
 
 local function new_text(name)
-	local file = assert(io.open("text/" .. name .. ".txt"))
-	local data = file:read("*all")
-	file:close()
+	local data = ""
+	for line in love.filesystem.lines("text/" .. name .. ".txt") do
+		data = data .. line .. "\n"
+	end
 	return data
 end
 

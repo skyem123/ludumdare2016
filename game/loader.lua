@@ -40,13 +40,11 @@ function loader.unload_list()
 end
 
 function loader.load_list(name)
-	local file = assert(io.open("levels/" .. name .. ".txt"))
 	loader.list = {}
-	for line in file:lines() do
+	for line in love.filesystem.lines("levels/" .. name .. ".txt") do
 		table.insert(loader.list, line)
 	end
 	loader.position = 0
-	file:close()
 end
 
 function loader.next_level(level)

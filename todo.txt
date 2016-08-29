@@ -1,9 +1,13 @@
 # Very important
-Being able to load the next level once you've done with this level
+Get a game finished screen!
+DONE! Being able to load the next level once you've done with this level
+DONE! Allowing multiple inputs
 A name
+levels
+being able to play the game without debug info!
 
 # Quite Important
-A page that describes the rules of the game and the controls
+DONE! A page that describes the rules of the game and the controls
 
 # Nice to have but not the most important thing
 Make the goals start off white and fill with colour over 1 second when they are finished
