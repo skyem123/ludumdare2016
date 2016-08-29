@@ -59,6 +59,16 @@ function check_goals()
     return false
 end
 
+wall_list = {
+    {{128, 128, 128}, 0, 0, 800, 600}
+}
+
+function render_walls()
+    for _,wall in pairs(wall_list) do
+        helpers.render_link_position(unpack(wall))
+    end
+end
+
 
 function render_crystals()
   for i,crystal in pairs(level.crystals) do
@@ -143,6 +153,7 @@ function love.draw()
   --if test then render_crystal(0, 128, 255, x_test, y_test) end
   render_links()
   render_crystals()
+  render_walls()
 
   -- render the links you are creating
   if linking then
