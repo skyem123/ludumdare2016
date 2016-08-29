@@ -31,6 +31,12 @@ function Crystal:new(o, coords, colour, label, linked_from, operation)
   return o
 end
 
+function Crystal:new_goal(o, coords, colour, label, linked_from, goal)
+    crystal = Crystal.new(self, o, coords, colour, label, linked_from, function() return nil end)
+    crystal.goal = goal
+    return crystal
+end
+
 function Crystal:internalnew(o)
   o = o or {}
   mt = {}

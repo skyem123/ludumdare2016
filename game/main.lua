@@ -2,6 +2,7 @@ local Crystal = require 'crystal'
 local helpers = require 'helpers'
 local Link = require 'link'
 local audio = require 'audio'
+local loader = require 'loader'
 
 screen_displayed = nil
 game_paused = false
@@ -15,6 +16,8 @@ link_crystal = nil
 
 last_dt = 0
 total_dt = 0
+
+goal_reached = false
 
 function display_welcome()
   love.graphics.print(
@@ -46,26 +49,21 @@ test = false;
 x_test = 0;
 y_test = 0;
 
--- Here's a list of crystals!
-crystals = {}
+level = loader.new_level()
 
-function save_crystal(...)
-  return table.insert(crystals, Crystal:new({}, ...))
-end
 
-function load_level(name)
-    level = require("levels/" .. name)
-    -- load the level
-    for _,item in pairs(level) do
-        if item[1] == "crystal" then
-            save_crystal(unpack(item, 2))
-        end
+function check_goals()
+    local reached = true
+    for _,goal in pairs(level.goals) do
+        reached = reached and goal.input == goal.goal
     end
+
+    return reached
 end
 
 
 function render_crystals()
-  for i,crystal in pairs(crystals) do
+  for i,crystal in pairs(level.crystals) do
     crystal:draw()
   end
 end
@@ -79,7 +77,7 @@ function find_crystal_from_ID(crystal_list, ID)
 end
 
 function render_links()
-    for _,crystal in pairs(crystals) do
+    for _,crystal in pairs(level.crystals) do
         crystal:drawlinks()
     end
 end
@@ -90,7 +88,7 @@ function update_render_lists()
 end
 
 function collision_check_all_crystals_ID(x,y,w,h)
-  for i,crystal in pairs(crystals) do
+  for i,crystal in pairs(level.crystals) do
     if crystal:collision_check(x,y,w,h) then
       return crystal.ID, crystal
     end
@@ -124,6 +122,11 @@ function love.draw()
   if mouseover_id ~= nil then
     love.graphics.print("Mouse Over Crystal ID: " .. tostring(mouseover_id), 0,10)
     love.graphics.print("Mouse over Crystal value: " .. tostring(mouseover_crystal.value), 0, 60)
+    if mouseover_crystal.goal ~= nil then
+        love.graphics.print("Mouse over crystal goal: " .. tostring(mouseover_crystal.goal), 0, 100)
+        love.graphics.print("Mouse over crystal goal complete? " ..  tostring(mouseover_crystal.completed or "false"), 0, 120)
+    end
+    love.graphics.print("Mouse over crystal input: " .. tostring(mouseover_crystal.input), 0, 110)
   end
   if linking then
     love.graphics.print("Linking from: " .. link_x .. ", " .. link_y, 0, 20)
@@ -136,14 +139,16 @@ function love.draw()
   love.graphics.print("Average DT: " .. love.timer.getAverageDelta(), 0, 80)
   love.graphics.print("Time (excluding pause): " .. total_dt, 0, 50)
   love.graphics.print("FPS: " .. love.timer.getFPS(), 0, 70)
-
+  love.graphics.print("Level goal reached? " .. tostring(goal_reached or "false"), 0, 90)
 
 end
 
 
 
 function love.load()
-    load_level("test")
+    --loader.load_level(level, "test")
+    loader.load_list("list")
+    loader.next_level(level)
     screen_displayed = display_welcome
     update_render_lists()
 end
@@ -224,7 +229,7 @@ function love.mousepressed(x, y, button, istouch)
         print("wut")
         local collide = false
         local the_link = Link:new(link_crystal, target_crystal)
-        for _,crystal in pairs(crystals) do
+        for _,crystal in pairs(level.crystals) do
             for _,link in pairs(crystal.linked_from) do -- TODO: Is this correct?
                 if (the_link:collision_check(link)) then
                     collide = true
@@ -254,14 +259,14 @@ function love.update(dt)
     -- Save the value of every cystal
     local old_values = {}
     local old_inputs = {}
-    for _,crystal in pairs(crystals) do
+    for _,crystal in pairs(level.crystals) do
         old_values[crystal.ID] = crystal.value
         old_inputs[crystal.ID] = crystal.input
     end
     -- Find out and store the new values...
     local new_values = {}
     local new_inputs = {}
-    for _,crystal in pairs(crystals) do
+    for _,crystal in pairs(level.crystals) do
         -- TODO: Find what on earth this is linked to!!
         -- TODO: Abstract a bit?
         -- TODO: How will two inputs work?
@@ -269,13 +274,18 @@ function love.update(dt)
     end
 
     -- Now update the list of inputs!
-    for _,crystal in pairs(crystals) do for _,link in pairs(crystal.linked_from) do
-        new_inputs[crystal.ID] = new_values[link.source.ID]
-    end end
+    for _,crystal in pairs(level.crystals) do
+        for _,link in pairs(crystal.linked_from) do
+            new_inputs[crystal.ID] = new_values[link.source.ID]
+        end
+    end
 
     -- Save the values to the crystals!
-    for _,crystal in pairs(crystals) do
+    for _,crystal in pairs(level.crystals) do
         crystal.value = new_values[crystal.ID]
         crystal.input = new_inputs[crystal.ID]
     end
+
+    -- check if the goal is reached
+    goal_reached = check_goals()
 end
