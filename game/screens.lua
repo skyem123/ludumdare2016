@@ -27,7 +27,7 @@ function screens.pause()
     , 50, 50, 0, 1.5)
     love.graphics.print(
     "Press <ENTER> or 'P' to unpause.\n" ..
-    "Press 'R' to display the rules.\n" ..
+    "Press 'H' to display the rules.\n" ..
     "Press 'W' for the welcome screen.\n" ..
 	"Press 'C' for credits!"
     , 50, 80, 0, 1)

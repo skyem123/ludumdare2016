@@ -167,9 +167,9 @@ function love.keypressed(key)
 end -- TODO CHECK FOR LEVEL END AND ENTER KEY TO LOAD NEXT LEVEL
   if key == 'w' then
     screen_displayed = screens.welcome
-  elseif key == 'r' then
+  elseif key == 'h' then
     screen_displayed = screens.rules
-elseif key == 'c' then
+  elseif key == 'c' then
     screen_displayed = screens.credits
   elseif key == 'p' then
     if screen_displayed == screens.pause then
@@ -179,6 +179,11 @@ elseif key == 'c' then
       screen_displayed = screens.pause
     end
   end
+
+  if key == 'return' and goal_reached then
+    loader.next_level(level)
+  end
+
   if key == 'u' then
       update_render_lists()
   end

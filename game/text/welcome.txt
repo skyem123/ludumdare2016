@@ -7,7 +7,7 @@ Anyway, link the crystals and you'll be fine, okay?
 Good Luck!
 
 
-Press the 'R' key to display the rules.
+Press the 'H' key to display help.
 After you understand the rules, press the <ENTER> key to get started! (It exits these screens)
 
 Useful Keys:

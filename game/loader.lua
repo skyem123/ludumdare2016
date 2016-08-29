@@ -12,11 +12,15 @@ function loader.new_level()
 end
 
 function loader.save_crystal(level, ...)
-	table.insert(level.crystals, Crystal:new({}, ...))
+	local crystal = Crystal:new({}, ...)
+	table.insert(level.crystals, crystal)
 end
 
 function loader.load_level(level, name)
-	local data = require("levels/" .. name)
+	local data = dofile("levels/" .. name .. ".lua")
+	-- reset the level
+	level.crystals = {}
+	level.goals = {}
 	-- load the level
 	for _,item in pairs(data) do
 	    if item[1] == "crystal" then
