@@ -1,10 +1,13 @@
 Press the <ENTER> key to exit this screen.
 
 This is a puzzle game, where you have to link "crystals" together to get a result.
-The final crystal in the link has to be a goal crystal, which is the while, circular crystal.
+The final crystal in the link has to be a goal crystal, which is the white, circular crystal.
 
-Each crystal has multiple inputs (not yet implemented, actually...), and a single output.
+Each crystal has multiple inputs, and a single output.
 The order in which inputs are processed are determined by the order the links were created.
+For example, if 6 was first connected to a divide (÷) crystal, then 2 was connected second,
+the operation would be 6÷2 which equals 3!
+
 You can connect a crystal's output to multiple crystals but then output will be the same for everything it's connected to.
 
 To start a link, left click on a crystal. There should be a line following your cursor indicating where you just clicked.
