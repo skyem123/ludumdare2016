@@ -48,7 +48,9 @@ end
 function loader.load_list(name)
 	loader.list = {}
 	for line in love.filesystem.lines("levels/" .. name .. ".txt") do
-		table.insert(loader.list, line)
+		if line ~= "" then
+			table.insert(loader.list, line)
+		end
 	end
 	loader.position = 0
 end

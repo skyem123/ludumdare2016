@@ -94,6 +94,8 @@ function Crystal:orientation(q, r)
 end
 
 function Crystal:onSeg(q, r)
+  -- TODO FIXME
+  if r == nil then return false end
   return q.x <= math.max(self.x, r.x) and q.x >= math.min(self.x, r.x) and
          q.y <= math.max(self.y, r.y) and q.y >= math.min(self.y, r.y)
 end
