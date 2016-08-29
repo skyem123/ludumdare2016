@@ -219,7 +219,9 @@ end -- TODO CHECK FOR LEVEL END AND ENTER KEY TO LOAD NEXT LEVEL
   end
 
   if key == 'return' and goal_reached then
-    loader.next_level(level)
+    if loader.next_level(level) == "ended" then
+      screen_displayed = screens.finish
+    end
   end
 
   if key == 'u' then

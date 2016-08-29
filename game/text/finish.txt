@@ -1,0 +1,5 @@
+Congratulations, you finished our game!
+Sadly, this is not how we wanted the game to turn out, but, here you are.
+
+To restart the game, literally restart the game. Not enough time to implement that.
+To see who made this thing, press the 'C' key.

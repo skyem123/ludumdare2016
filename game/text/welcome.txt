@@ -1,11 +1,9 @@
 Welcome to our Ludum Dare game for Ludum Dare 36!
-We haven't named it yet.
 
-This game is about solving a puzzle from some ancient technology.
-Not any old ancient technology, it's unrealistic ancient technology found in science fiction!
-Anyway, link the crystals and you'll be fine, okay?
-Good Luck!
-
+Here's some backstory, you've found these strange crystals, and they appear to do something.
+You can link them together in a certain way to get to the next stage.
+If you finish all the puzzles, you win!
+what do you win? the internet. wait... that didn't exist then... Eh, you'll win nothing, aside from this game.
 
 Press the 'H' key to display help.
 After you understand the rules, press the <ENTER> key to get started! (It exits these screens)

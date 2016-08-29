@@ -7,7 +7,8 @@ local loader = {}
 function loader.new_level()
 	return {
 		crystals = {},
-		goals = {}
+		goals = {},
+		walls = {}
 	}
 end
 
@@ -57,7 +58,10 @@ function loader.next_level(level)
 		loader.position = loader.position + 1
 		if loader.position <= #loader.list then
 			loader.load_level(level, loader.list[loader.position])
+		else
+			return "ended"
 		end
+		return "loaded"
 	end
 end
 

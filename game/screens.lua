@@ -41,8 +41,14 @@ function screens.credits()
 	love.graphics.print(text["credits-b"], 300,40)
 end
 
+function screens.finish()
+	love.graphics.print("You Win!", 50, 50, 0, 3)
+	love.graphics.print(text["finish"], 50, 100)
+end
+
 
 load_text("welcome")
 load_text("rules")
 load_text("credits-b")
+load_text("finish")
 return screens
