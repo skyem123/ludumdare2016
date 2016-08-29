@@ -59,13 +59,15 @@ function check_goals()
     return false
 end
 
-wall_list = {
-    {{128, 128, 128}, 0, 0, 800, 600}
-}
+wall_link_list = {}
 
 function render_walls()
+    --[[
     for _,wall in pairs(wall_list) do
         helpers.render_link_position(unpack(wall))
+    end--]]
+    for _,link in pairs(wall_link_list) do
+        link:draw()
     end
 end
 
@@ -92,7 +94,11 @@ end
 
 
 function update_render_lists()
-    -- I'm keeping this here incanse there's something
+    -- Not technically for a render list, but close enough!
+    for i,wall in pairs(level.walls) do
+        local link = Link:new(Crystal:new(nil, nil, {wall[2], wall[3]}), Crystal:new(nil, nil, {wall[4], wall[5]}), wall[1])
+        wall_link_list[i] = link
+    end
 end
 
 function collision_check_all_crystals_ID(x,y,w,h)
@@ -270,6 +276,13 @@ function love.mousepressed(x, y, button, istouch)
         for _,crystal in pairs(level.crystals) do
             for _,link in pairs(crystal.linked_from) do -- TODO: Is this correct?
                 if (the_link:collision_check(link)) then
+                    collide = true
+                end
+                print("hah?")
+            end
+            for _,wall in pairs(wall_link_list) do
+                print("huh?")
+                if (the_link:collision_check(wall)) then
                     collide = true
                 end
             end

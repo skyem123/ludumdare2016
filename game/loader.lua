@@ -22,6 +22,8 @@ function loader.load_level(level, name)
 	-- reset the level
 	level.crystals = {}
 	level.goals = {}
+	level.walls = {}
+
 	-- load the level
 	for _,item in pairs(data) do
 	    if item[1] == "crystal" then
@@ -30,7 +32,9 @@ function loader.load_level(level, name)
 			local crystal = Crystal:new_goal({}, unpack(item, 2))
 			table.insert(level.crystals, crystal)
 			table.insert(level.goals, crystal)
-			print(level.crystals)
+			--print(level.crystals)
+		elseif item[1] == "wall" then
+			table.insert(level.walls, {unpack(item, 2)})
 		end
 	end
 end
