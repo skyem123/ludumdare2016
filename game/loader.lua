@@ -6,7 +6,8 @@ local loader = {}
 
 function loader.new_level()
 	return {
-		crystals = {}
+		crystals = {},
+		goals = {}
 	}
 end
 
@@ -20,7 +21,12 @@ function loader.load_level(level, name)
 	for _,item in pairs(data) do
 	    if item[1] == "crystal" then
 	        loader.save_crystal(level, unpack(item, 2))
-	    end
+	    elseif item[1] == "goal" then
+			local crystal = Crystal:new_goal({}, unpack(item, 2))
+			table.insert(level.crystals, crystal)
+			table.insert(level.goals, crystal)
+			print(level.crystals)
+		end
 	end
 end
 

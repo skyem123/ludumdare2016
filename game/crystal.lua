@@ -31,6 +31,17 @@ function Crystal:new(o, coords, colour, label, linked_from, operation)
   return o
 end
 
+function Crystal:new_goal(o, coords, colour, label, linked_from, goal)
+    print(linked_from)
+    return Crystal.new(self, o, coords, colour, label, linked_from, function(_, ...)
+        for _,value in ipairs({...}) do
+            if value == goal then
+                self.completed = true
+            end
+        end
+    end)
+end
+
 function Crystal:internalnew(o)
   o = o or {}
   mt = {}

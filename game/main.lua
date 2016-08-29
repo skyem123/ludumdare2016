@@ -248,9 +248,11 @@ function love.update(dt)
     end
 
     -- Now update the list of inputs!
-    for _,crystal in pairs(level.crystals) do for _,link in pairs(crystal.linked_from) do
-        new_inputs[crystal.ID] = new_values[link.source.ID]
-    end end
+    for _,crystal in pairs(level.crystals) do
+        for _,link in pairs(crystal.linked_from) do
+            new_inputs[crystal.ID] = new_values[link.source.ID]
+        end
+    end
 
     -- Save the values to the crystals!
     for _,crystal in pairs(level.crystals) do
