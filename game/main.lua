@@ -31,7 +31,11 @@ check_goals_time = total_dt
 function check_goals()
     local reached = true
     for _,goal in pairs(level.goals) do
-        reached = reached and goal.input == goal.goal
+        local this_reached = false
+        for _,input in pairs(goal.inputs) do
+            this_reached = this_reached or input == goal.goal
+        end
+        reached = reached and this_reached
     end
     local new_time = total_dt
 
@@ -98,7 +102,7 @@ function draw_debug_info()
           love.graphics.print("Mouse over crystal goal: " .. tostring(mouseover_crystal.goal), 0, 100)
           love.graphics.print("Mouse over crystal goal complete? " ..  tostring(mouseover_crystal.completed or "false"), 0, 120)
       end
-      love.graphics.print("Mouse over crystal input: " .. tostring(mouseover_crystal.input), 0, 110)
+      love.graphics.print("Mouse over crystal inputs: " .. table.concat(mouseover_crystal.inputs, ", "), 0, 110)
     end
     if linking then
       love.graphics.print("Linking from: " .. link_x .. ", " .. link_y, 0, 20)
@@ -160,7 +164,7 @@ function love.keypressed(key)
       screen_displayed = nil
       game_paused = false
     end
-  end
+end -- TODO CHECK FOR LEVEL END AND ENTER KEY TO LOAD NEXT LEVEL
   if key == 'w' then
     screen_displayed = screens.welcome
   elseif key == 'r' then
@@ -262,7 +266,7 @@ function love.update(dt)
     local old_inputs = {}
     for _,crystal in pairs(level.crystals) do
         old_values[crystal.ID] = crystal.value
-        old_inputs[crystal.ID] = crystal.input
+        old_inputs[crystal.ID] = crystal.inputs
     end
     -- Find out and store the new values...
     local new_values = {}
@@ -271,20 +275,24 @@ function love.update(dt)
         -- TODO: Find what on earth this is linked to!!
         -- TODO: Abstract a bit?
         -- TODO: How will two inputs work?
-        new_values[crystal.ID] = crystal.operation(old_values[crystal.ID], old_inputs[crystal.ID], 0)
+        --print(old_inputs[crystal.ID])
+        new_values[crystal.ID] = crystal.operation(old_values[crystal.ID], unpack(old_inputs[crystal.ID]))
     end
 
     -- Now update the list of inputs!
     for _,crystal in pairs(level.crystals) do
+        local i = 0
+        new_inputs[crystal.ID] = {}
         for _,link in pairs(crystal.linked_from) do
-            new_inputs[crystal.ID] = new_values[link.source.ID]
+            i = i+1
+            new_inputs[crystal.ID][i] = new_values[link.source.ID] or 0
         end
     end
 
     -- Save the values to the crystals!
     for _,crystal in pairs(level.crystals) do
         crystal.value = new_values[crystal.ID]
-        crystal.input = new_inputs[crystal.ID]
+        crystal.inputs = new_inputs[crystal.ID]
     end
 
     -- check if the goal is reached
