@@ -10,7 +10,7 @@ trajing:
   Sound Effects
   Programming
   
-finnolearly:
+Alex (Finn) O'leary:
   Programming
 
 Pending Chaos:
@@ -26,7 +26,7 @@ Programming:
   Skye / skyem / skyem123
   striking
   trajing
-  finnolearly
+  Alex (Finn) O'leary
 
 Testing:
   Skye / skyem / skyem123
