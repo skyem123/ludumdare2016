@@ -1,0 +1,41 @@
+Skye / skyem / skyem123:
+  Programming
+  Testing
+
+striking:
+  Programming
+
+trajing:
+  Game Concept / Design
+  Sound Effects
+  Programming
+  
+finnolearly:
+  Programming
+
+Pending Chaos:
+  Motivation!
+
+
+
+--------------------------------------------------------------------
+
+
+
+Programming:
+  Skye / skyem / skyem123
+  striking
+  trajing
+  finnolearly
+
+Testing:
+  Skye / skyem / skyem123
+
+Game Concept / Design:
+  trajing
+
+Sound Effects:
+  trajing
+
+Motivation:
+  Pending Chaos
