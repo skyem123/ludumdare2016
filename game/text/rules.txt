@@ -1,0 +1,21 @@
+Press the <ENTER> key to exit this screen.
+
+This is a puzzle game, where you have to link "crystals" together to get a result.
+The final crystal in the link has to be a goal crystal, which is the while, circular crystal.
+
+Each crystal has multiple inputs (not yet implemented, actually...), and a single output.
+The order in which inputs are processed are determined by the order the links were created.
+You can connect a crystal's output to multiple crystals but then output will be the same for everything it's connected to.
+
+To start a link, left click on a crystal. There should be a line following your cursor indicating where you just clicked.
+To finish a link left click again on another crystal, after starting a link.
+Remember! The direction of the link is important! The data goes from the crystal you started the link from.
+
+A link cannot cross over another link.
+A link cannot cross over a wall.
+
+To remove a link, just repeat the process you used to make a link on already linked crystals.
+The direction is not important when removing a link.
+
+Once you've got everything linked up properly, there is a one second timer, to make sure the output value is steady.
+After this timer, and the level's completed, you can press the <ENTER> key to move onto the next level.

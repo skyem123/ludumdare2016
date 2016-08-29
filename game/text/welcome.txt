@@ -1,0 +1,13 @@
+Welcome to our Ludum Dare game for Ludum Dare 36!
+We haven't named it yet.
+
+This game is about solving a puzzle from some ancient technology.
+Not any old ancient technology, it's unrealistic ancient technology found in science fiction!
+Anyway, link the crystals and you'll be fine, okay?
+Good Luck!
+
+
+Press the <ENTER> key to get started. (It exits these screens)
+Press the 'R' key to display the rules.
+Press the 'P' key to pause.
+Press the 'W' key for this welcome screen.

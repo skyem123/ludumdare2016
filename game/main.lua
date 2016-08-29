@@ -3,6 +3,7 @@ local helpers = require 'helpers'
 local Link = require 'link'
 local audio = require 'audio'
 local loader = require 'loader'
+local screens = require 'screens'
 
 screen_displayed = nil
 game_paused = false
@@ -18,32 +19,6 @@ last_dt = 0
 total_dt = 0
 
 goal_reached = false
-
-function display_welcome()
-  love.graphics.print(
-  "Welcome to our Ludum Dare game for Ludum Dare 36!\n" ..
-  "We haven't named it yet.\n\n" ..
-  "This game is about solving a puzzle from some ancient technology.\n" ..
-  "Not any old ancient technology, it's unrealistic ancient technolgy found in science fiction!\n" ..
-  "Anyway, link the crystals and you'll be fine, okay?\n" ..
-  "Good Luck!\n\n\n" ..
-  "Press the <ENTER> key to get started. (It exits these screens)\n" ..
-  "Press the 'R' key to display the rules.\n" ..
-  "Press the 'P' key to pause.\n" ..
-  "Press the 'W' key for this welcome screen."
-  , 0, 0)
-end
-
-function render_pause_screen()
-  love.graphics.print(
-  "Game Paused"
-  , 50, 50, 0, 1.5)
-  love.graphics.print(
-  "Press <ENTER> or 'P' to unpause.\n" ..
-  "Press 'R' to display the rules.\n" ..
-  "Press 'W' for the welcome screen."
-  , 50, 80, 0, 1)
-end
 
 test = false;
 x_test = 0;
@@ -151,7 +126,6 @@ function love.draw()
   love.graphics.print("Time (excluding pause): " .. total_dt, 0, 50)
   love.graphics.print("FPS: " .. love.timer.getFPS(), 0, 70)
   love.graphics.print("Level goal reached? " .. tostring(goal_reached or "false"), 0, 90)
-  love.graphics.print("Check goals time: " .. tostring(check_goals_time), 0, 130)
 end
 
 
@@ -160,7 +134,7 @@ function love.load()
     --loader.load_level(level, "test")
     loader.load_list("list")
     loader.next_level(level)
-    screen_displayed = display_welcome
+    screen_displayed = screens.welcome
     update_render_lists()
 end
 
@@ -176,13 +150,15 @@ function love.keypressed(key)
     end
   end
   if key == 'w' then
-    screen_displayed = display_welcome
+    screen_displayed = screens.welcome
+  elseif key == 'r' then
+    screen_displayed = screens.rules
   elseif key == 'p' then
-    if screen_displayed == render_pause_screen then
+    if screen_displayed == screens.pause then
       screen_displayed = nil
       game_paused = false
     else
-      screen_displayed = render_pause_screen
+      screen_displayed = screens.pause
     end
   end
   if key == 'u' then
