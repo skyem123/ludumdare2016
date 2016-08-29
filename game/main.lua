@@ -29,7 +29,7 @@ level = loader.new_level()
 
 
 function render_tooltip(text, x, y)
-    love.graphics.print(text, x,y, nil, 2, nil, 0, 15)
+    love.graphics.print(text, x,y, nil, 2, nil, -10, 15)
 end
 
 
@@ -151,9 +151,11 @@ function love.draw()
 
   local mouseover_crystal = collision_check_all_crystals(love.mouse.getX(), love.mouse.getY(), 0, 0)
   if mouseover_crystal then
-    if mouseover_crystal.goal ~= nil then
-        render_tooltip("Goal: " .. tonumber(mouseover_crystal.goal), love.mouse.getPosition())
-    end
+      if mouseover_crystal.tooltip ~= nil then
+          render_tooltip(mouseover_crystal.tooltip, love.mouse.getPosition())
+      elseif mouseover_crystal.goal ~= nil then
+          render_tooltip("Goal: " .. tonumber(mouseover_crystal.goal), love.mouse.getPosition())
+      end
   end
 
   draw_debug_info()
