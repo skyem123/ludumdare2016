@@ -52,13 +52,24 @@ y_test = 0;
 level = loader.new_level()
 
 
+check_goals_time = love.timer.getTime()
 function check_goals()
     local reached = true
     for _,goal in pairs(level.goals) do
         reached = reached and goal.input == goal.goal
     end
+    local new_time = love.timer.getTime()
 
-    return reached
+    if not reached then
+        --print("tick")
+        check_goals_time = new_time
+    elseif (new_time - check_goals_time) >= 1 then
+        --print("hmm")
+        return true
+    --else print("ugh " .. tonumber(check_goals_time - new_time))
+    end
+
+    return false
 end
 
 
@@ -140,7 +151,7 @@ function love.draw()
   love.graphics.print("Time (excluding pause): " .. total_dt, 0, 50)
   love.graphics.print("FPS: " .. love.timer.getFPS(), 0, 70)
   love.graphics.print("Level goal reached? " .. tostring(goal_reached or "false"), 0, 90)
-
+  love.graphics.print("Check goals time: " .. tostring(check_goals_time), 0, 130)
 end
 
 
