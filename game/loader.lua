@@ -17,7 +17,8 @@ function loader.save_crystal(level, ...)
 end
 
 function loader.load_level(level, name)
-	local data = dofile("levels/" .. name .. ".lua")
+	--local data = dofile("levels/" .. name .. ".lua")
+	local data = love.filesystem.load("levels/" .. name .. ".lua")()
 	-- reset the level
 	level.crystals = {}
 	level.goals = {}
