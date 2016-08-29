@@ -9,6 +9,7 @@ local Crystal = {
     ['value'] = 0,
     ['operation'] = function(current, a, b) return current end,
     ['input'] = 0,
+    ['style'] = 4,
 }
 
 do
@@ -17,7 +18,7 @@ local helpers = require 'helpers'
 
 local nextID = 1
 
-function Crystal:new(o, coords, colour, label, linked_from, operation)
+function Crystal:new(o, style, coords, colour, label, linked_from, operation)
   o = self:internalnew(o or {})
   coords = coords or {}
   o.x = coords[1] or self.x
@@ -27,12 +28,13 @@ function Crystal:new(o, coords, colour, label, linked_from, operation)
   o.label = label or self.label
   o.ID = nextID
   o.operation = operation or self.operation
+  o.style = style or self.style
   nextID = nextID + 1
   return o
 end
 
-function Crystal:new_goal(o, coords, colour, label, linked_from, goal)
-    crystal = Crystal.new(self, o, coords, colour, label, linked_from, function() return nil end)
+function Crystal:new_goal(o, style, coords, colour, label, linked_from, goal)
+    crystal = Crystal.new(self, o, style, coords, colour, label, linked_from, function() return nil end)
     crystal.goal = goal
     return crystal
 end
@@ -49,7 +51,11 @@ function Crystal:draw()
   old = {love.graphics.getColor()}
 
   love.graphics.setColor(unpack(self.colour))
-  love.graphics.circle("fill", self.x, self.y, 15, 4)
+  if self.style == 0 then
+    love.graphics.circle("fill", self.x, self.y, 15, 50)
+  else
+    love.graphics.circle("fill", self.x, self.y, 15, self.style)
+  end
 
   if self.label ~= nil then
     love.graphics.setColor(255-self.colour[1], 255-self.colour[2], 255-self.colour[3])
