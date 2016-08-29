@@ -52,13 +52,13 @@ y_test = 0;
 level = loader.new_level()
 
 
-check_goals_time = love.timer.getTime()
+check_goals_time = total_dt
 function check_goals()
     local reached = true
     for _,goal in pairs(level.goals) do
         reached = reached and goal.input == goal.goal
     end
-    local new_time = love.timer.getTime()
+    local new_time = total_dt
 
     if not reached then
         --print("tick")
