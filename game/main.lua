@@ -16,6 +16,8 @@ link_crystal = nil
 last_dt = 0
 total_dt = 0
 
+goal_reached = false
+
 function display_welcome()
   love.graphics.print(
   "Welcome to our Ludum Dare game for Ludum Dare 36!\n" ..
@@ -47,6 +49,16 @@ x_test = 0;
 y_test = 0;
 
 level = loader.new_level()
+
+
+function check_goals()
+    local reached = true
+    for _,goal in pairs(level.goals) do
+        reached = reached and goal.input == goal.goal
+    end
+
+    return reached
+end
 
 
 function render_crystals()
@@ -109,6 +121,11 @@ function love.draw()
   if mouseover_id ~= nil then
     love.graphics.print("Mouse Over Crystal ID: " .. tostring(mouseover_id), 0,10)
     love.graphics.print("Mouse over Crystal value: " .. tostring(mouseover_crystal.value), 0, 60)
+    if mouseover_crystal.goal ~= nil then
+        love.graphics.print("Mouse over crystal goal: " .. tostring(mouseover_crystal.goal), 0, 100)
+        love.graphics.print("Mouse over crystal goal complete? " ..  tostring(mouseover_crystal.completed or "false"), 0, 120)
+    end
+    love.graphics.print("Mouse over crystal input: " .. tostring(mouseover_crystal.input), 0, 110)
   end
   if linking then
     love.graphics.print("Linking from: " .. link_x .. ", " .. link_y, 0, 20)
@@ -121,7 +138,7 @@ function love.draw()
   love.graphics.print("Average DT: " .. love.timer.getAverageDelta(), 0, 80)
   love.graphics.print("Time (excluding pause): " .. total_dt, 0, 50)
   love.graphics.print("FPS: " .. love.timer.getFPS(), 0, 70)
-
+  love.graphics.print("Level goal reached? " .. tostring(goal_reached or "false"), 0, 90)
 
 end
 
@@ -259,4 +276,7 @@ function love.update(dt)
         crystal.value = new_values[crystal.ID]
         crystal.input = new_inputs[crystal.ID]
     end
+
+    -- check if the goal is reached
+    goal_reached = check_goals()
 end

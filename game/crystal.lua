@@ -32,14 +32,9 @@ function Crystal:new(o, coords, colour, label, linked_from, operation)
 end
 
 function Crystal:new_goal(o, coords, colour, label, linked_from, goal)
-    print(linked_from)
-    return Crystal.new(self, o, coords, colour, label, linked_from, function(_, ...)
-        for _,value in ipairs({...}) do
-            if value == goal then
-                self.completed = true
-            end
-        end
-    end)
+    crystal = Crystal.new(self, o, coords, colour, label, linked_from, function() return nil end)
+    crystal.goal = goal
+    return crystal
 end
 
 function Crystal:internalnew(o)
