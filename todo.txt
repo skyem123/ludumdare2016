@@ -1,8 +1,9 @@
 # Very important
 Being able to load the next level once you've done with this level
+A name
 
 # Quite Important
-A page that describes the rules of the game
+A page that describes the rules of the game and the controls
 
 # Nice to have but not the most important thing
 Make the goals start off white and fill with colour over 1 second when they are finished
