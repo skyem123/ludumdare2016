@@ -5,6 +5,8 @@ local audio = require 'audio'
 local loader = require 'loader'
 local screens = require 'screens'
 
+no_sfx = false
+
 screen_displayed = nil
 game_paused = false
 screen_input = false
@@ -169,6 +171,8 @@ function love.load()
     loader.next_level(level)
     screen_displayed = screens.welcome
     update_render_lists()
+    audio.track_1:play()
+    audio.track_1:setLooping(true)
 end
 
 function love.keypressed(key)
@@ -204,6 +208,16 @@ end -- TODO CHECK FOR LEVEL END AND ENTER KEY TO LOAD NEXT LEVEL
   if key == 'u' then
       update_render_lists()
   end
+
+  if key == 'm' then
+      if audio["track_1"]:isPlaying() then
+          audio["track_1"]:pause()
+      else
+          audio["track_1"]:play()
+      end
+  elseif key == 's' then
+      no_sfx = not no_sfx
+  end
 end
 
 function love.mousepressed(x, y, button, istouch)
@@ -221,7 +235,7 @@ function love.mousepressed(x, y, button, istouch)
     link_y = y
     link_id, link_crystal = collision_check_all_crystals_ID(x,y,0,0)
     linking = true
-    if link_crystal ~= nil then
+    if link_crystal ~= nil and not no_sfx then
         audio['select']:stop()
         audio['select']:play()
     end
@@ -266,8 +280,10 @@ function love.mousepressed(x, y, button, istouch)
 
         if not collide then
             table.insert(target_crystal.linked_from, Link:new(link_crystal, target_crystal))
-            audio['link_finished']:stop()
-            audio['link_finished']:play()
+            if not no_sfx then
+                audio['link_finished']:stop()
+                audio['link_finished']:play()
+            end
         end
       end
       --link_y, link_x, link_id, link_crystal, target_id, target_crystal = nil, nil, nil, nil, nil, nil
