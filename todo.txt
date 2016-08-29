@@ -1,15 +1,16 @@
 # Very important
 Get a game finished screen!
-DONE! Being able to load the next level once you've done with this level
-DONE! Allowing multiple inputs
 A name
 levels
 being able to play the game without debug info!
+goal crystals should have a clear way to mark their goal!
 
 # Quite Important
 DONE! A page that describes the rules of the game and the controls
+A way to restart the level and the game
 
 # Nice to have but not the most important thing
 Make the goals start off white and fill with colour over 1 second when they are finished
 Make more sound effects, for unlink, and no link, etc...
 Tutorials
+Way to reorder inputs
