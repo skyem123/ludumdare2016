@@ -9,18 +9,18 @@ solve puzzles the gates apply various operations on the
 data being transferred. As if all of this weren't bad
 enough, there are complications!
 
-Crystal Types:
-
-* Emitter: Outputs a constant value  
-* Function: Takes one or more values in, outputs one value.  
-* Restrictor: Takes one value in, outputs one value or not at all.  
-* Receiver: Takes one value and scores it based upon how close it is to the goal.  
+Crystal Types: (each has their own style!)
+* Emitter: Outputs a constant value. (circle)
+* Function: Takes one or more values in, outputs one value. (square or diamond)
+* Note that a crystal the forwards is basically a one input function that does nothing to the value.
+* Restrictor: Takes one value in, outputs one value or not at all. (triangle)
+* Receiver: Takes one value and scores it based upon how close it is to the goal. (circle, fills with colour over 1 second as it "charges")
 
 Other Mechanics:
 
 * Connections are one way, in and out.  
 * The greater the absolute value of the number a connection carries, the greater the frequency of its wave.
-* To indicated the source of the wave, the crystal that the wave comes from will be the same colour as the wave itself.
+* ~~to indicated the source of the wave, the crystal that the wave comes from will be the same colour as the wave itself.~~
 * Positive numbers have a green wave, negatives red.  
 * Connections may not overlap.  
 * Connections may not pass through walls.  
