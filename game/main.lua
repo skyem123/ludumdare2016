@@ -87,6 +87,33 @@ function collision_check_all_crystals(x,y,w,h)
     return crystal
 end
 
+
+function draw_debug_info()
+    love.graphics.print("Mouse at: " .. love.mouse.getX() .. ", " .. love.mouse.getY(), 0, 0)
+    local mouseover_id, mouseover_crystal = collision_check_all_crystals_ID(love.mouse.getX(), love.mouse.getY(), 0, 0)
+    if mouseover_id ~= nil then
+      love.graphics.print("Mouse Over Crystal ID: " .. tostring(mouseover_id), 0,10)
+      love.graphics.print("Mouse over Crystal value: " .. tostring(mouseover_crystal.value), 0, 60)
+      if mouseover_crystal.goal ~= nil then
+          love.graphics.print("Mouse over crystal goal: " .. tostring(mouseover_crystal.goal), 0, 100)
+          love.graphics.print("Mouse over crystal goal complete? " ..  tostring(mouseover_crystal.completed or "false"), 0, 120)
+      end
+      love.graphics.print("Mouse over crystal input: " .. tostring(mouseover_crystal.input), 0, 110)
+    end
+    if linking then
+      love.graphics.print("Linking from: " .. link_x .. ", " .. link_y, 0, 20)
+      if link_id then
+          love.graphics.print("Linking from ID: " .. link_id, 0, 30)
+      end
+    end
+
+    love.graphics.print("DT: " .. love.timer.getDelta(), 0, 40)
+    love.graphics.print("Average DT: " .. love.timer.getAverageDelta(), 0, 80)
+    love.graphics.print("Time (excluding pause): " .. total_dt, 0, 50)
+    love.graphics.print("FPS: " .. love.timer.getFPS(), 0, 70)
+    love.graphics.print("Level goal reached? " .. tostring(goal_reached or "false"), 0, 90)
+end
+
 function love.draw()
   if screen_displayed ~= nil then
     game_paused = true
@@ -94,6 +121,13 @@ function love.draw()
     return
   end
   -- the game should be rendered here.
+
+  if goal_reached then
+      love.graphics.print("Press <ENTER> to load the next level...", 10, 550, 0, 3)
+  else
+      love.graphics.print("Press 'P' to pause the game and get help", 5, 550, 0, 3)
+  end
+
   --if test then render_crystal(0, 128, 255, x_test, y_test) end
   render_links()
   render_crystals()
@@ -103,29 +137,7 @@ function love.draw()
     helpers.render_link_position({255,255,255}, link_x, link_y, love.mouse.getPosition())
   end
 
-  love.graphics.print("Mouse at: " .. love.mouse.getX() .. ", " .. love.mouse.getY(), 0, 0)
-  local mouseover_id, mouseover_crystal = collision_check_all_crystals_ID(love.mouse.getX(), love.mouse.getY(), 0, 0)
-  if mouseover_id ~= nil then
-    love.graphics.print("Mouse Over Crystal ID: " .. tostring(mouseover_id), 0,10)
-    love.graphics.print("Mouse over Crystal value: " .. tostring(mouseover_crystal.value), 0, 60)
-    if mouseover_crystal.goal ~= nil then
-        love.graphics.print("Mouse over crystal goal: " .. tostring(mouseover_crystal.goal), 0, 100)
-        love.graphics.print("Mouse over crystal goal complete? " ..  tostring(mouseover_crystal.completed or "false"), 0, 120)
-    end
-    love.graphics.print("Mouse over crystal input: " .. tostring(mouseover_crystal.input), 0, 110)
-  end
-  if linking then
-    love.graphics.print("Linking from: " .. link_x .. ", " .. link_y, 0, 20)
-    if link_id then
-        love.graphics.print("Linking from ID: " .. link_id, 0, 30)
-    end
-  end
-
-  love.graphics.print("DT: " .. love.timer.getDelta(), 0, 40)
-  love.graphics.print("Average DT: " .. love.timer.getAverageDelta(), 0, 80)
-  love.graphics.print("Time (excluding pause): " .. total_dt, 0, 50)
-  love.graphics.print("FPS: " .. love.timer.getFPS(), 0, 70)
-  love.graphics.print("Level goal reached? " .. tostring(goal_reached or "false"), 0, 90)
+    draw_debug_info()
 end
 
 
