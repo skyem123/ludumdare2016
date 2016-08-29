@@ -30,6 +30,8 @@ function screens.pause()
     "Press <ENTER> or 'P' to unpause.\n" ..
     "Press 'H' to display the rules.\n" ..
     "Press 'W' for the welcome screen.\n" ..
+	"Press 'M' to mute the music.\n" ..
+	"Press 'S' to mute the sound effects.\n" ..
 	"Press 'C' for credits!"
     , 50, 80, 0, 1)
 end

@@ -6,6 +6,6 @@ return {
 	{"crystal", 4, {744, 444}, {  0,  255, 255}, "+",  {}, function(c, ...) t=0; for _,v in ipairs({...}) do print(v)  t=t+v  end; return t end},
 	--{"crystal", 4, {744, 444}, {  0,  255, 255}, "+",  {}, function(c, a, b) print(a, b)return (a or 0)+(b or 0) end},
 	{"crystal", 0, {444, 223}, {255,    0, 255}, "1",  {}, function(c, a) return 1 end},
-	{"goal",    0, {780,  20}, {255,  255, 255}, "G",  {}, 4},
+	{"goal",    0, {700,  30}, {255,  255, 255}, "G",  {}, 4},
 	{"goal",    0, {300, 160}, {255,  255, 255}, "G",  {}, 1},
 }

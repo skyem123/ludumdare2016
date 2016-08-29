@@ -14,3 +14,5 @@ Useful Keys:
 Press the 'P' key to pause.
 Press the 'W' key for this welcome screen.
 Press the 'C' key for credits.
+Press the 'M' key to mute the music.
+Press the 'S' key to mute the sound effects.
