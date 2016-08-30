@@ -9,7 +9,7 @@
 --]]
 
 return {
-	{"crystal", 4, {200, 150}, {128, 255, 255}, "^", {}, function(c, a, ...) local t=(a or 0); for _,v in ipairs({...}) do t=t^v  end; return t end, "This raises the first value\n by the second value."},
+	{"crystal", 4, {200, 150}, {128, 255, 255}, "^", {}, function(c, a, ...) local t=(a or 0); local l={...}; if #l == 0 then return 1 end; for _,v in ipairs(l) do t=t^v  end; return t end, "This raises the first value\n by the second value."},
 	{"crystal", 4, {400, 150}, {255,   0, 255}, "-" , {}, function(c, a,...) local t=a; for _,v in ipairs({...}) do t=t-v  end; return t end, "This subtracts stuff\n from the first input.\nThe order of connections\n is important!"},
 	{"goal",    0, {150, 250}, {255, 255, 255}, "G", {}, -8, "You need to calculate -8\n from the other crystals..."},
 	{"crystal", 0, {450, 250}, {255,   0,   0}, "7", {}, function() return 7 end, "This outputs 7."},

@@ -1,7 +1,7 @@
 return {
 	{"goal",    0, {180, 400}, {255, 255, 255}, "G" , {}, 3, "You need to calculate 3\nusing the other cyrstals..."},
 	{"crystal", 0, {180, 175}, {255,   0,   0}, "10", {}, function() return 10 end, "This outputs 10..."},
-	{"crystal", 0, {340, 325}, {  0, 128,   0}, "-" , {}, function(c, a,...) local t=a; for _,v in ipairs({...}) do t=t-v  end; return t end, "This subtracts stuff\n from the first input.\nThe order of connections\n is important!"},
+	{"crystal", 4, {340, 325}, {  0, 128,   0}, "-" , {}, function(c, a,...) local t=a; for _,v in ipairs({...}) do t=t-v  end; return t end, "This subtracts stuff\n from the first input.\nThe order of connections\n is important!"},
 	{"crystal", 0, {500, 175}, {  0,   0, 255}, "7" , {}, function() return 7 end, "This outputs 7..."},
 }
 
